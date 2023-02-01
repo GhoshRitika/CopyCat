@@ -476,6 +476,18 @@ int get_message(int ch, int* id, int* len, unsigned char* data, int blocking)
     err = canReadMsg(ch, id, len, data, blocking);
     return err;
 }
+// int can_write_message(void* ch, int id, int len, unsigned char* data, int blocking, int timeout_usec)
+// {
+//     int err;
+//     err = canSendMsg(ch, id, len, data, blocking, timeout_usec);
+//     return err;
+// }
 
+// int can_read_message(void* ch, int* id, int* len, unsigned char* data, int blocking, int timeout_usec)
+// {
+//     int err;
+//     err = canReadMsg(ch, id, len, data, blocking, timeout_usec);
+//     return err;
+// }
 
 CANAPI_END

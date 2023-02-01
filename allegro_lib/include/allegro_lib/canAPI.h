@@ -179,6 +179,30 @@ int request_temperature(int ch, int sindex);
  */
 int get_message(int ch, int* id, int* len, unsigned char* data, int blocking);
 
+// /**
+//  * @brief can_write_message
+//  * @param ch
+//  * @param id
+//  * @param len
+//  * @param data
+//  * @param blocking
+//  * @param timeout_usec
+//  * @return
+//  */
+// int can_write_message(void* ch, int id, int len, unsigned char* data, int blocking, int timeout_usec);
+
+// /**
+//  * @brief can_read_message
+//  * @param ch
+//  * @param id
+//  * @param len
+//  * @param data
+//  * @param blocking
+//  * @param timeout_usec
+//  * @return
+//  */
+// int can_read_message(void* ch, int* id, int* len, unsigned char* data, int blocking, int timeout_usec);
+
 CANAPI_END
 
 #endif
