@@ -9,13 +9,14 @@
 #include <functional>
 #include <memory>
 #include <string>
+#include <unistd.h>
 
 #include "allegro_lib/canAPI.h"
 #include "allegro_lib/rDeviceAllegroHandCANDef.h"
 #include "allegro_lib/RockScissorsPaper.h"
 #include "rclcpp/rclcpp.hpp"
 #include "std_srvs/srv/empty.hpp"
-#include "sensor_msgs/msg/jointstate.hpp"
+// #include "sensor_msgs/msg/jointstate.hpp"
 
 
 #define PEAKCAN (1)
@@ -404,7 +405,7 @@ class AllegroDriver : public rclcpp::Node
       paper_server_= create_service<std_srvs::srv::Empty>("paper", std::bind(&AllegroDriver::paper_callback, this, std::placeholders::_1, std::placeholders::_2));
       scissor_server_= create_service<std_srvs::srv::Empty>("scissor", std::bind(&AllegroDriver::scissor_callback, this, std::placeholders::_1, std::placeholders::_2));
       trial_server_= create_service<std_srvs::srv::Empty>("trial", std::bind(&AllegroDriver::trial_callback, this, std::placeholders::_1, std::placeholders::_2));
-      joint_state_pub = create_publisher<sensor_msgs::msg::JointState>("~/joint_state", 10);
+    //   joint_state_pub = create_publisher<sensor_msgs::msg::JointState>("~/joint_state", 10);
       timer_ = this->create_wall_timer(300ms, std::bind(&AllegroDriver::timer_callback, this));
     }
 
@@ -412,7 +413,7 @@ class AllegroDriver : public rclcpp::Node
     void timer_callback()
     { 
         count_ += delT; 
-        double q_temp[MAX_DOF];
+        
         if (input == '1'){
             MotionRock();
         }
@@ -423,19 +424,43 @@ class AllegroDriver : public rclcpp::Node
             MotionScissors();
         }
         else if (input == 'y'){
+            pBHand->SetMotionType(eMotionType_GRAVITY_COMP);
+            sleep(5);
+            
             std::copy(q, q+MAX_DOF, q_temp);
+            RCLCPP_INFO(this->get_logger(), "Copying: %lf %lf %lf %lf", q_temp[0],q_temp[1],q_temp[2],q_temp[3]);
+            RCLCPP_INFO(this->get_logger(), "Q now: %lf %lf %lf %lf", q[0],q[1],q[2],q[3]);
+            
+            input = 'k';
         }
         else if (input == 'n'){
             std::copy(q_temp, q_temp+MAX_DOF, q_des);
-            short position[4];
-            position[0] = (int)q[0] *(65536.0/333.3)*(180.0/3.141592);
-            position[1] = (int)q[0] *(65536.0/333.3)*(180.0/3.141592);
-            position[2] = (int)q[0] *(65536.0/333.3)*(180.0/3.141592);
-            position[3] = (int)q[0] *(65536.0/333.3)*(180.0/3.141592);
-            command_set_pose(CAN_Ch, 0, position);
+            RCLCPP_INFO(this->get_logger(), "Publishing: %lf %lf %lf %lf", q_des[0],q_des[1],q_des[2],q_des[3]);
+            pBHand->SetMotionType(eMotionType_JOINT_PD);
+            // SetGainsRSP();
+            // if (!pBHand) return;
+            double kp[] = {
+                500, 800, 900, 500,
+                500, 800, 900, 500,
+                500, 800, 900, 500,
+                1000, 700, 600, 600
+            };
+            double kd[] = {
+                25, 50, 55, 40,
+                25, 50, 55, 40,
+                25, 50, 55, 40,
+                50, 50, 50, 40
+            };
+            pBHand->SetGainsEx(kp, kd);
+            // pBHand->SetMotionType(eMotionType_GRAVITY_COMP);
+            // input = 'k';
         }
-
-        RCLCPP_INFO(this->get_logger(), "Publishing: '%lf, %lf, %lf, %lf'", q[0], q[1], q[2], q[3]);
+        // else if (input == 'a'){
+        //     pBHand->SetMotionType(eMotionType_GRAVITY_COMP);
+        // }
+        RCLCPP_INFO(this->get_logger(), "Publishing: %c", input);
+        // pBHand->SetMotionType(eMotionType_GRAVITY_COMP);
+        // input = 'k';
     }
 
     void rock_callback(std_srvs::srv::Empty::Request::SharedPtr,
@@ -456,33 +481,36 @@ class AllegroDriver : public rclcpp::Node
     void trial_callback(std_srvs::srv::Empty::Request::SharedPtr,
                         std_srvs::srv::Empty::Response::SharedPtr)
     {
-        if (input != 'n')
+        if (prev != 'y')
         {
             input = 'y';
         }
         else{
             input = 'n';
         }
+        prev = input;
     }
 
-    void publishData() {
-    // current position, velocity and effort (torque) published
-    current_joint_state.header.stamp = tnow;
-    for (int i = 0; i < DOF_JOINTS; i++) {
-        current_joint_state.position[i] = current_position_filtered[i];
-        current_joint_state.velocity[i] = current_velocity_filtered[i];
-        current_joint_state.effort[i] = desired_torque[i];
-    }
-    joint_state_pub.publish(current_joint_state);
-    }
+    // void publishData() {
+    // // current position, velocity and effort (torque) published
+    // current_joint_state.header.stamp = tnow;
+    // for (int i = 0; i < DOF_JOINTS; i++) {
+    //     current_joint_state.position[i] = current_position_filtered[i];
+    //     current_joint_state.velocity[i] = current_velocity_filtered[i];
+    //     current_joint_state.effort[i] = desired_torque[i];
+    // }
+    // joint_state_pub.publish(current_joint_state);
+    // }
     rclcpp::TimerBase::SharedPtr timer_;
     rclcpp::Service<std_srvs::srv::Empty>::SharedPtr rock_server_;
     rclcpp::Service<std_srvs::srv::Empty>::SharedPtr paper_server_;
     rclcpp::Service<std_srvs::srv::Empty>::SharedPtr scissor_server_;
     rclcpp::Service<std_srvs::srv::Empty>::SharedPtr trial_server_;
     size_t count_;
-    char input = 'n';
-    sensor_msgs::msg::JointState current_state;
+    char input='k';
+    char prev='n';
+    double q_temp[MAX_DOF];
+    // sensor_msgs::msg::JointState current_state;
 };
 
 
