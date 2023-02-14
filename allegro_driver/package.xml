@@ -5,7 +5,7 @@
   <version>0.0.0</version>
   <description>TODO: Package description</description>
   <maintainer email="ritikaghosh2023@u.northwestern.edu">ritz</maintainer>
-  <license>TODO: License declaration</license>
+  <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
@@ -13,7 +13,13 @@
   <depend>std_srvs</depend>
   <depend>std_msgs</depend>
   <depend>allegro_lib</depend>
+
   <depend>bhand</depend>
+
+  <exec_depend>ros2launch</exec_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz2</exec_depend>
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 

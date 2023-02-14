@@ -1,0 +1,27 @@
+
+<launch>
+  <arg name="JSP_GUI" default="true"/>
+   <!-- NOTE: The joint_state_publisher is actually commanding *desired* joint
+       angles. You can use the 'sim' controller to have a non-existent hand. -->
+  <!-- <param name="robot_description" -->
+         command="$(find xacro)/xacro
+                  $(find allegro_driver)/urdf/AllegroHandRight.urdf.xacro"/>
+  <!-- Joint States (angles) to Joint Transforms -->
+  <node name="jointState2tf" pkg="robot_state_publisher" exec="robot_state_publisher">
+    <param name="robot_description"
+         command="$(find xacro)/xacro
+                  $(find allegro_driver)/urdf/AllegroHandRight.urdf.xacro"/>
+    <!-- <remap from="tf" to="allegroHand/tf"/> -->
+    <!-- <remap from="joint_states" to="allegroHand/joint_states"/> -->
+  </node>
+
+  <node name="joint_states" pkg="joint_state_publisher" exec="joint_state_publisher"
+       if = "$(eval '\'$(var JSP_GUI)\' == \'true\'')">
+    <!-- <remap from="joint_states" to="allegroHand/joint_cmd"/> -->
+    <param name="use_gui" value="true"/>
+  </node>
+
+  <node pkg="rviz2" exec="rviz2" /> 
+  <!-- args="-d $(find-pkg-share nuturtle_description)/config/basic_all.rviz" -->
+  
+</launch>
