@@ -77,24 +77,26 @@ class FingerTracking(Node):
         m14 =  math.atan2(self.ring_dip[1] - self.ring_pip[1], (self.ring_dip[0] - self.ring_pip[0]))
         m15 =  math.atan2(self.ring_tip[1] - self.ring_dip[1], (self.ring_tip[0] - self.ring_dip[0]))
 
-        # m16 = math.atan2(self.self.thumb_mcp[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[1]))
+        m16 = math.atan2(self.wrist[1] - self.thumb_cmc[1], (self.wrist[0] - self.thumb_cmc[1]))
+        m17 = math.atan2(self.wrist[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[1]))
 
 
-        self.thumb_wrist = 1.5708 - math.atan(abs((m0 - m1) / (1 + m0 * m1)))
-        self.thumb_base = math.atan(abs((m1 - m2) / (1 + m1 * m2)))
+        self.thumb_wrist = math.atan(abs((m0 - m1) / (1 + m0 * m1))) - 0.8
+        self.thumb_index = math.atan(abs((m16 - m17) / (1 + m16 * m17)))
+        self.thumb_base = math.atan(abs((m1 - m2) / (1 + m1 * m2))) 
         self.thumb_knuckle = math.atan(abs((m2 - m3) / (1 + m2 * m3)))
 
-        self.index_base = 1.5708 - math.atan(abs((m4 - m5) / (1 + m4 * m5)))
+        self.index_base = math.atan(abs((m4 - m5) / (1 + m4 * m5))) - 0.8
         self.index_knuckle = math.atan(abs((m5 - m6) / (1 + m5 * m6)))
-        self.index_tip = math.atan(abs((m6 - m7) / (1 + m6 * m7)))
+        self.index_tip = math.atan(abs((m6 - m7) / (1 + m6 * m7))) 
 
-        self.middle_base = 1.5708 - math.atan(abs((m8 - m9) / (1 + m8 * m9)))
+        self.middle_base =  math.atan(abs((m8 - m9) / (1 + m8 * m9))) - 0.8
         self.middle_knuckle = math.atan(abs((m9 - m10) / (1 + m9 * m10)))
-        self.middle_tip = math.atan(abs((m10 - m11) / (1 + m10 * m11)))
+        self.middle_tip = math.atan(abs((m10 - m11) / (1 + m10 * m11))) 
 
-        self.ring_base = 1.5708 - math.atan(abs((m12 - m13) / (1 + m12 * m13)))
+        self.ring_base = math.atan(abs((m12 - m13) / (1 + m12 * m13))) - 0.8
         self.ring_knuckle = math.atan(abs((m13 - m14) / (1 + m13 * m14)))
-        self.ring_tip = math.atan(abs((m14 - m15) / (1 + m14 * m15)))
+        self.ring_tip = math.atan(abs((m14 - m15) / (1 + m14 * m15))) 
 
 
     def timer_callback(self):
@@ -123,10 +125,14 @@ class FingerTracking(Node):
                     for hand_landmarks in results.multi_hand_landmarks:
                         self.get_indices(hand_landmarks)
                         self.calc_angle()
+                        # self.angles.data = [0.0,self.index_base, self.index_knuckle, self.index_tip,
+                        # 0.0, self.middle_knuckle, self.middle_tip, self.middle_base,
+                        # 0.0,  self.ring_knuckle,self.ring_tip,self.ring_base, 
+                        # self.thumb_wrist, 0.0, self.thumb_base, self.thumb_knuckle,]
                         self.angles.data = [0.0, self.index_base, self.index_knuckle, self.index_tip,
                         0.0, self.middle_base, self.middle_knuckle, self.middle_tip,
-                        0.0, self.ring_base, self.ring_knuckle, self.ring_tip,
-                        self.thumb_wrist, 0.0, self.thumb_base, self.thumb_knuckle,]
+                       0.0, self.ring_base, self.ring_knuckle, self.ring_tip, 
+                        self.thumb_wrist, self.thumb_index, self.thumb_base, self.thumb_knuckle]
                         self.ang_pub.publish(self.angles)
                         self.mp_drawing.draw_landmarks(
                             image,
