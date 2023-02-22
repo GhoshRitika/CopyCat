@@ -30,21 +30,23 @@ int main(int argc, char * argv[])
     msg.position.z = 0.5;
     return msg;
     }();
-    move_group_interface.setPoseTarget(target_pose);
+    // move_group_interface.setPoseTarget(target_pose);
+    auto const current_pose_index =  move_group_interface.getEndEffectorLink();
+    RCLCPP_INFO_STREAM(logger, "current" << current_pose_index);
 
     // Create a plan to that target pose
-    auto const [success, plan] = [&move_group_interface]{
-    moveit::planning_interface::MoveGroupInterface::Plan msg;
-    auto const ok = static_cast<bool>(move_group_interface.plan(msg));
-    return std::make_pair(ok, msg);
-    }();
+    // auto const [success, plan] = [&move_group_interface]{
+    // moveit::planning_interface::MoveGroupInterface::Plan msg;
+    // auto const ok = static_cast<bool>(move_group_interface.plan(msg));
+    // return std::make_pair(ok, msg);
+    // }();
 
-    // Execute the plan
-    if(success) {
-    move_group_interface.execute(plan);
-    } else {
-    RCLCPP_ERROR(logger, "Planing failed!");
-    }
+    // // Execute the plan
+    // if(success) {
+    // move_group_interface.execute(plan);
+    // } else {
+    // RCLCPP_ERROR(logger, "Planing failed!");
+    // }
   // Shutdown ROS
   rclcpp::shutdown();
   return 0;

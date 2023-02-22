@@ -7,7 +7,7 @@ moveit_setup_assistant_config:
   package_settings:
     author_name: Ritika Ghosh
     author_email: ritikaghosh2023@u.northwestern.edu
-    generated_timestamp: 1677018571
+    generated_timestamp: 1677106634
   control_xacro:
     command:
       - position

@@ -5,6 +5,10 @@ moveit_controller_manager: moveit_simple_controller_manager/MoveItSimpleControll
 moveit_simple_controller_manager:
   controller_names:
     - allegro_hand_controller
+    - index_controller
+    - thumb_controller
+    - middle_controller
+    - ring_controller
 
   allegro_hand_controller:
     type: FollowJointTrajectory
@@ -27,3 +31,49 @@ moveit_simple_controller_manager:
       - joint_9.0
       - joint_10.0
       - joint_11.0
+    action_ns: follow_joint_trajectory
+    default: true
+  index_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - joint_0.0
+      - joint_1.0
+      - joint_2.0
+      - joint_3.0
+    action_ns: follow_joint_trajectory
+    default: true
+  thumb_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - joint_12.0
+      - joint_13.0
+      - joint_14.0
+      - joint_15.0
+    action_ns: follow_joint_trajectory
+    default: true
+  middle_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - joint_4.0
+      - joint_5.0
+      - joint_6.0
+      - joint_7.0
+    action_ns: follow_joint_trajectory
+    default: true
+  ring_controller:
+    type: FollowJointTrajectory
+    action_ns: follow_joint_trajectory
+    default: true
+    joints:
+      - joint_8.0
+      - joint_9.0
+      - joint_10.0
+      - joint_11.0
+    action_ns: follow_joint_trajectory
+    default: true
