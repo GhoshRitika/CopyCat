@@ -10,6 +10,8 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(geometry_msgs REQUIRED)
+find_package(moveit_ros_planning_interface REQUIRED)
 # include(${INSTALL_PREFIX}/lib/cmake/allegro_lib.cmake)
 find_package(allegro_lib REQUIRED)
 find_library(NAMES BHand PATHS home/ritz/WinterQ/Project/AllegroHandManipulation/Allegro_interface/src/libBHand_64/lib/libBHand.so)
@@ -22,14 +24,16 @@ find_library(NAMES BHand PATHS home/ritz/WinterQ/Project/AllegroHandManipulation
 # set_property(TARGET bhand PROPERTY
 #              IMPORTED_LOCATION "/home/ritz/WinterQ/Project/AllegroHandManipulation/Allegro_interface/src/bhand/lib/BHand.so")
 add_executable(allegro_driver src/allegro_driver.cpp)
+add_executable(hello_moveit src/hello_moveit.cpp)
 # target_link_libraries(allegro_driver bhand)
 # target_include_directories(allegro_driver PUBLIC
 #   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 #   $<INSTALL_INTERFACE:include>)
 target_link_libraries(allegro_driver BHand) #PCANBasic
 ament_target_dependencies(allegro_driver rclcpp std_srvs std_msgs allegro_lib)
+ament_target_dependencies(hello_moveit rclcpp geometry_msgs moveit_ros_planning_interface)
 
-install(TARGETS allegro_driver DESTINATION lib/${PROJECT_NAME})
+install(TARGETS allegro_driver hello_moveit DESTINATION lib/${PROJECT_NAME})
 
 install(DIRECTORY
   launch

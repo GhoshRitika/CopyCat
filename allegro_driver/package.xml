@@ -12,7 +12,9 @@
   <depend>rclpp</depend>
   <depend>std_srvs</depend>
   <depend>std_msgs</depend>
+  <depend>geometry_msgs</depend>
   <depend>allegro_lib</depend>
+  <depend>moveit_ros_planning_interface</depend>
 
   <depend>bhand</depend>
 

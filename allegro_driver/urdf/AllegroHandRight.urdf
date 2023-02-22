@@ -71,7 +71,7 @@
             </geometry>
         </collision>
         <inertial>
-          <origin xyz="0 0 ${palm_link_z/2.0}" rpy="0 0 0"/>
+          <origin xyz="0 0 ${palm_link_z/2}" rpy="0 0 0"/>
           <mass value="0.4154"/>
           <inertia
               ixx="1e-4" ixy="0.0" ixz="0.0"
@@ -102,7 +102,7 @@
                 <geometry>
                     <box size="${link0_t_x} ${link0_t_y} ${link0_t_z}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="${-0.0358/2.0+0.0} ${.018/2} ${.029/2.0}"/>
+                <origin rpy="0 0 0" xyz="${-0.0358/2+0.0} ${.018/2} ${.029/2}"/>
             </collision>
 
             <inertial>
@@ -141,7 +141,7 @@
                 <geometry>
                     <box size="${links_x} ${links_y} ${link1_t_z}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="0 0 ${link1_t_z/2.0}"/>
+                <origin rpy="0 0 0" xyz="0 0 ${link1_t_z/2}"/>
             </collision>
 
             <inertial>
@@ -178,7 +178,7 @@
                 <geometry>
                     <box size="${links_x} ${links_y} ${link2_t_z}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="0 0 ${link2_t_z/2.0}"/>
+                <origin rpy="0 0 0" xyz="0 0 ${link2_t_z/2}"/>
             </collision>
 
             <inertial>
@@ -214,7 +214,7 @@
                 <geometry>
                     <box size="${links_x} ${links_y} ${link3_t_z-fingerTip_r}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="0 0 ${(link3_t_z-fingerTip_r)/2.0}"/>
+                <origin rpy="0 0 0" xyz="0 0 ${(link3_t_z-fingerTip_r)/2}"/>
             </collision>
 
             <inertial>
@@ -289,7 +289,7 @@
                 <geometry>
                     <box size="${links_x} ${links_y} ${link0_z}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="0 0 ${link0_z/2.0}"/>
+                <origin rpy="0 0 0" xyz="0 0 ${link0_z/2}"/>
             </collision>
 
             <inertial>
@@ -326,7 +326,7 @@
                 <geometry>
                     <box size="${links_x} ${links_y} ${link1_z}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="0 0 ${link1_z/2.0}"/>
+                <origin rpy="0 0 0" xyz="0 0 ${link1_z/2}"/>
             </collision>
             <inertial>
               <mass value="0.065" />
@@ -361,7 +361,7 @@
                 <geometry>
                     <box size="${links_x} ${links_y} ${link2_z}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="0 0 ${link2_z/2.0}"/>
+                <origin rpy="0 0 0" xyz="0 0 ${link2_z/2}"/>
             </collision>
 
             <inertial>
@@ -397,7 +397,7 @@
                 <geometry>
                     <box size="${links_x} ${links_y} ${link3_z-fingerTip_r}"/>
                 </geometry>
-                <origin rpy="0 0 0" xyz="0 0 ${(link3_z-fingerTip_r)/2.0}"/>
+                <origin rpy="0 0 0" xyz="0 0 ${(link3_z-fingerTip_r)/2}"/>
             </collision>
 
             <inertial>

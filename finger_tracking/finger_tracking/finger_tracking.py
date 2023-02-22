@@ -1,8 +1,13 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray
+from sensor_msgs.msg import Image, CameraInfo
+from cv_bridge import CvBridge, CvBridgeError
+from enum import Enum, auto
+import pyrealsense2 as rs
 import cv2
 import mediapipe as mp
+import numpy as np
 import math
 
 JOINT_LIMIT_THUMB_HIGH = 0.0
@@ -21,17 +26,78 @@ class FingerTracking(Node):
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_drawing_styles = mp.solutions.drawing_styles
         self.mp_hands = mp.solutions.hands
-        self.cap = cv2.VideoCapture(0)
+        # self.cap = cv2.VideoCapture(0)
+        # self.hands = self.mp_hands.Hands(
+        #     model_complexity=0,
+        #     min_detection_confidence=0.5,
+        #     min_tracking_confidence=0.5)
+        self.angles = Float64MultiArray()
+        # self.data = []
+        self.bridge = CvBridge()
+        self.intrinsics = None
+        self.color_frame = None
+        self.depth_frame = None
+
+        self.color_sub = self.create_subscription(Image, '/camera/color/image_raw',
+                                                    self.color_callback, 10)
+        self.depth_sub = self.create_subscription(Image, '/camera/aligned_depth_to_color/image_raw',
+                                                    self.depth_callback, 10)
+        self.info_sub = self.create_subscription(CameraInfo,
+                                                 "/camera/aligned_depth_to_color/camera_info",
+                                                 self.info_callback, 10)
+        self.ang_pub = self.create_publisher(Float64MultiArray, 'Joint_angles', 10)
+        self.timer = self.create_timer(0.01, self.timer_callback)
+
+    def info_callback(self, cameraInfo):
+        """Store the intrinsics of the camera."""
+        try:
+            if self.intrinsics:
+                return
+            self.intrinsics = rs.intrinsics()
+            self.intrinsics.width = cameraInfo.width
+            self.intrinsics.height = cameraInfo.height
+            # self.intrinsics.ppx = cameraInfo.k[2]
+            # self.intrinsics.ppy = cameraInfo.k[5]
+            # self.intrinsics.fx = cameraInfo.k[0]
+            # self.intrinsics.fy = cameraInfo.k[4]
+        except CvBridgeError:
+            self.get_logger().info("Getting intrinsics failed?")
+            return
+
+    def color_callback(self, data):
+        self.get_logger().info("Getting frames")
+        self.color_frame = self.bridge.imgmsg_to_cv2(data, desired_encoding='bgr8')
+    
+    def depth_callback(self, data):
+        self.depth_frame=self.bridge.imgmsg_to_cv2(data)
+        #put a mask on it
+        depth_copy = np.asanyarray(self.depth_frame)
+        color_copy = np.asanyarray(self.color_frame)
+        # depth_sensor = profile.get_device().first_depth_sensor()
+        # depth_scale = depth_sensor.get_depth_scale()
+        # print("Depth Scale is: ", depth_scale)
+
+        #  (THIS IS REDUNDANT, I am going to delete it)
+        # clipping_distance_in_meters = 2.5  # 1 meter
+        # clipping_distance = clipping_distance_in_meters / depth_scale
+        # depth_mask = cv2.inRange(np.array(depth_copy), band_start,
+        #                          band_start+band_width)
+        grey = 153
+        clip = 5.0 * 1000
+        depth_frame_3d = np.dstack((depth_copy, depth_copy, depth_copy))
+        self.bg_removed = np.where((depth_frame_3d < clip) |
+                                (depth_frame_3d <= 0), grey, color_copy)
+        # color_mask = cv2.inRange(np.array(color_copy), 1, 225)
+        # This operation helps to remove "dots" on the depth image.
+        # Kernel higher dimensional = smoother. It's also less important if camera is farther away.
+        # kernel = np.ones((25, 25), np.uint8)
+        # self.depth_mask = cv2.morphologyEx(bg_removed, cv2.MORPH_CLOSE, kernel)
+
         self.hands = self.mp_hands.Hands(
             model_complexity=0,
             min_detection_confidence=0.5,
             min_tracking_confidence=0.5)
-        self.angles = Float64MultiArray()
-        # self.data = []
-        self.ang_pub = self.create_publisher(Float64MultiArray, 'Joint_angles', 10)
-        self.timer = self.create_timer(0.01, self.timer_callback)
-
-
+    
     def get_indices(self, handLandmarks):
         self.wrist = [handLandmarks.landmark[0].x, handLandmarks.landmark[0].y]
 
@@ -105,45 +171,46 @@ class FingerTracking(Node):
         #     model_complexity=0,
         #     min_detection_confidence=0.5,
         #     min_tracking_confidence=0.5) as hands:
-            if self.cap.isOpened():
-                success, image = self.cap.read()
-                if not success:
-                    print("Ignoring empty camera frame.")
-                    # If loading a video, use 'break' instead of 'continue'.
+            # if self.cap.isOpened():
+            #     success, image = self.cap.read()
+            #     if not success:
+            #         print("Ignoring empty camera frame.")
+            #         # If loading a video, use 'break' instead of 'continue'.
+                if self.depth_frame is not None:
+                    image = self.bg_removed
+                    # To improve performance, optionally mark the image as not writeable to
+                    # pass by reference.
+                    image.flags.writeable = False
+                    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+                    results = self.hands.process(image)
 
-                # To improve performance, optionally mark the image as not writeable to
-                # pass by reference.
-                image.flags.writeable = False
-                image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                results = self.hands.process(image)
-
-                # Draw the hand annotations on the image.
-                image.flags.writeable = True
-                image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-                if results.multi_hand_landmarks:
-                    # since we will be dealing with only one hand
-                    for hand_landmarks in results.multi_hand_landmarks:
-                        self.get_indices(hand_landmarks)
-                        self.calc_angle()
-                        # self.angles.data = [0.0,self.index_base, self.index_knuckle, self.index_tip,
-                        # 0.0, self.middle_knuckle, self.middle_tip, self.middle_base,
-                        # 0.0,  self.ring_knuckle,self.ring_tip,self.ring_base, 
-                        # self.thumb_wrist, 0.0, self.thumb_base, self.thumb_knuckle,]
-                        self.angles.data = [0.0, self.index_base, self.index_knuckle, self.index_tip,
-                        0.0, self.middle_base, self.middle_knuckle, self.middle_tip,
-                       0.0, self.ring_base, self.ring_knuckle, self.ring_tip, 
-                        self.thumb_wrist, self.thumb_index, self.thumb_base, self.thumb_knuckle]
-                        self.ang_pub.publish(self.angles)
-                        self.mp_drawing.draw_landmarks(
-                            image,
-                            hand_landmarks,
-                            self.mp_hands.HAND_CONNECTIONS,
-                            self.mp_drawing_styles.get_default_hand_landmarks_style(),
-                            self.mp_drawing_styles.get_default_hand_connections_style())
-                # Flip the image horizontally for a selfie-view display.
-                cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
-                if cv2.waitKey(5) & 0xFF == 27:
-                    cv2.destroyAllWindows()
+                    # Draw the hand annotations on the image.
+                    image.flags.writeable = True
+                    image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+                    if results.multi_hand_landmarks:
+                        # since we will be dealing with only one hand
+                        for hand_landmarks in results.multi_hand_landmarks:
+                            self.get_indices(hand_landmarks)
+                            self.calc_angle()
+                            # self.angles.data = [0.0,self.index_base, self.index_knuckle, self.index_tip,
+                            # 0.0, self.middle_knuckle, self.middle_tip, self.middle_base,
+                            # 0.0,  self.ring_knuckle,self.ring_tip,self.ring_base, 
+                            # self.thumb_wrist, 0.0, self.thumb_base, self.thumb_knuckle,]
+                            self.angles.data = [0.0, self.index_base, self.index_knuckle, self.index_tip,
+                            0.0, self.middle_base, self.middle_knuckle, self.middle_tip,
+                        0.0, self.ring_base, self.ring_knuckle, self.ring_tip, 
+                            self.thumb_wrist, self.thumb_index, self.thumb_base, self.thumb_knuckle]
+                            self.ang_pub.publish(self.angles)
+                            self.mp_drawing.draw_landmarks(
+                                image,
+                                hand_landmarks,
+                                self.mp_hands.HAND_CONNECTIONS,
+                                self.mp_drawing_styles.get_default_hand_landmarks_style(),
+                                self.mp_drawing_styles.get_default_hand_connections_style())
+                    # Flip the image horizontally for a selfie-view display.
+                    cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+                    if cv2.waitKey(5) & 0xFF == 27:
+                        cv2.destroyAllWindows()
                     #throw execption
                     # self.cap.release()
         # self.cap.release()
