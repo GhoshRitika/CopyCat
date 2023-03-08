@@ -17,7 +17,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_srvs/srv/empty.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
-// #include "sensor_msgs/msg/jointstate.hpp"
+#include "sensor_msgs/msg/joint_state.hpp"
 
 
 #define PEAKCAN (1)
@@ -405,7 +405,8 @@ class AllegroDriver : public rclcpp::Node
     //   scissor_server_= create_service<std_srvs::srv::Empty>("scissor", std::bind(&AllegroDriver::scissor_callback, this, std::placeholders::_1, std::placeholders::_2));
     //   trial_server_= create_service<std_srvs::srv::Empty>("trial", std::bind(&AllegroDriver::trial_callback, this, std::placeholders::_1, std::placeholders::_2));
     //   joint_state_pub = create_publisher<sensor_msgs::msg::JointState>("~/joint_state", 10);
-    joint_sub = create_subscription<std_msgs::msg::Float64MultiArray>("Joint_angles", 10, std::bind(&AllegroDriver::angle_callback, this, std::placeholders::_1));
+    // joint_sub = create_subscription<std_msgs::msg::Float64MultiArray>("Joint_angles", 10, std::bind(&AllegroDriver::angle_callback, this, std::placeholders::_1));
+    jointstates_sub = create_subscription<sensor_msgs::msg::JointState>("/joint_states", 10, std::bind(&AllegroDriver::angle_callback, this, std::placeholders::_1));
     timer_ = this->create_wall_timer(300ms, std::bind(&AllegroDriver::timer_callback, this));
 
     }
@@ -463,11 +464,17 @@ class AllegroDriver : public rclcpp::Node
             pBHand->SetMotionType(eMotionType_JOINT_PD);
             // SetGainsRSP();
             // if (!pBHand) return;
+            // double kp[] = {
+            //     500, 800, 900, 500,
+            //     500, 800, 900, 500,
+            //     500, 800, 900, 500,
+            //     1000, 700, 600, 600
+            // };
             double kp[] = {
-                500, 800, 900, 500,
-                500, 800, 900, 500,
-                500, 800, 900, 500,
-                1000, 700, 600, 600
+                300, 500, 650, 300,
+                300, 500, 650, 300,
+                300, 500, 650, 300,
+                700, 450, 400, 400
             };
             double kd[] = {
                 25, 50, 55, 40,
@@ -478,10 +485,49 @@ class AllegroDriver : public rclcpp::Node
             pBHand->SetGainsEx(kp, kd);
     }
 
-    void angle_callback(const std_msgs::msg::Float64MultiArray &msg){
+    // void angle_callback(const std_msgs::msg::Float64MultiArray &msg){
+    //     // std::vector<double> qnew(msg.data);
+    //     // *qnew= &msg.data;
+    //     std::copy(msg.data.begin(), msg.data.end(), qnew);
+    // }
+        void angle_callback(const sensor_msgs::msg::JointState &msg){
         // std::vector<double> qnew(msg.data);
         // *qnew= &msg.data;
-        std::copy(msg.data.begin(), msg.data.end(), qnew);
+        // name:
+// 0- joint_1.0 
+// 1- joint_2.0
+// 2- joint_11.0
+// 3- joint_10.0
+// 4- joint_15.0
+// 5- joint_9.0
+// 6- joint_8.0
+// 7- joint_7.0
+// 8- joint_13.0
+// 9- joint_4.0
+// 10- joint_5.0
+// 11- joint_14.0
+// 12- joint_0.0
+// 13- joint_12.0
+// 14- joint_6.0
+// 15- joint_3.0
+
+        qnew[0]=msg.position[12]; //index twist
+        qnew[1]=msg.position[0];  //index base
+        qnew[2]=msg.position[1];
+        qnew[3]=msg.position[15];
+        qnew[4]=msg.position[9]; //middle twist joint 4
+        qnew[5]=msg.position[10]; // joint 5
+        qnew[6]=msg.position[14]; // joint 6
+        qnew[7]=msg.position[7]; // joint 7
+        qnew[8]=msg.position[6];  // ring twist joint 8
+        qnew[9]=msg.position[5];
+        qnew[10]=msg.position[3];
+        qnew[11]=msg.position[2];
+        qnew[12]=msg.position[13]; //thumb wrist joint 12
+        qnew[13]=msg.position[8];  //thumb twist joint 13
+        qnew[14]=msg.position[11];  //joint 14
+        qnew[15]=msg.position[4]; //joint 15
+        // std::copy(msg.data.begin(), msg.data.end(), qnew);
     }
     // void rock_callback(std_srvs::srv::Empty::Request::SharedPtr,
     //                     std_srvs::srv::Empty::Response::SharedPtr)
@@ -522,7 +568,8 @@ class AllegroDriver : public rclcpp::Node
     // joint_state_pub.publish(current_joint_state);
     // }
     rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr joint_sub;
+    // rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr joint_sub;
+    rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr jointstates_sub;
     // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr rock_server_;
     // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr paper_server_;
     // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr scissor_server_;

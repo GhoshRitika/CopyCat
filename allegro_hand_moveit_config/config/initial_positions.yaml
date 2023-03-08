@@ -5,10 +5,10 @@ initial_positions:
   joint_1.0: 0
   joint_10.0: 0
   joint_11.0: 0
-  joint_12.0: 0
-  joint_13.0: 0
-  joint_14.0: 0
-  joint_15.0: 0
+  joint_12.0: 0.5284
+  joint_13.0: 0.3693
+  joint_14.0: 0.8977
+  joint_15.0: 0.4863
   joint_2.0: 0
   joint_3.0: 0
   joint_4.0: 0
