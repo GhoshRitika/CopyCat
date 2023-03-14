@@ -39,7 +39,7 @@ add_executable(plan_hand src/plan_hand.cpp)
 target_link_libraries(allegro_driver BHand) #PCANBasic
 ament_target_dependencies(allegro_driver rclcpp std_srvs std_msgs sensor_msgs allegro_lib)
 ament_target_dependencies(hello_moveit rclcpp geometry_msgs moveit_ros_planning_interface tf2)
-ament_target_dependencies(plan_hand rclcpp moveit_ros_planning_interface moveit_core moveit_ros_planning)
+ament_target_dependencies(plan_hand rclcpp std_msgs moveit_ros_planning_interface moveit_core moveit_ros_planning)
 
 install(TARGETS allegro_driver hello_moveit plan_hand DESTINATION lib/${PROJECT_NAME})
 
