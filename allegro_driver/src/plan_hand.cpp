@@ -13,7 +13,7 @@
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "std_msgs/msg/int32.hpp"
 
-
+using namespace std::chrono_literals;
 static const std::string PLANNING_GROUP = "allegro_hand";
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("move_group");
 
@@ -24,8 +24,6 @@ class PlanHand : public rclcpp::Node
     moveit::planning_interface::MoveGroupInterface move_group;
     rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr target_pose_sub_;
     // rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr moving_pub_;
-
-
     std::vector<double> joint_group_positions;
   
 
@@ -44,6 +42,14 @@ PlanHand::PlanHand(): Node("plan_hand"), move_group(std::shared_ptr<rclcpp::Node
   // current_state->copyJointGroupPositions(joint_model_group, joint_group_positions);
   // moving_pub_= this->create_publisher<std_msgs::msg::Int32>("/moving", 10);
   target_pose_sub_ = this->create_subscription<std_msgs::msg::Float64MultiArray>("Joint_angles", 10, std::bind(&PlanHand::target_pose_callback, this, std::placeholders::_1));
+  rclcpp::sleep_for(5s);
+  joint_group_positions = {0.0, 0.0, 0.0, 0.0, 0.5235, 0.3665, 0.8901, 0.4886, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  this->move_group.setJointValueTarget(joint_group_positions);
+  this->move_group.move();
+  rclcpp::sleep_for(10s);
+  // joint_group_positions = {0.0, 0.0, 0.0, 0.0, 0.8377, 0.0, 0.3665, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+  // this->move_group.setJointValueTarget(joint_group_positions);
+  // this->move_group.move();
 }
 
 void PlanHand::target_pose_callback(const std_msgs::msg::Float64MultiArray &msg){
