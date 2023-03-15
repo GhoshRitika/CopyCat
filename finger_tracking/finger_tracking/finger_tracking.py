@@ -120,7 +120,23 @@
 #         self.ring_pip = [handLandmarks.landmark[14].x, handLandmarks.landmark[14].y]
 #         self.ring_dip = [handLandmarks.landmark[15].x, handLandmarks.landmark[15].y]
 #         self.ring_tip = [handLandmarks.landmark[16].x, handLandmarks.landmark[16].y]
+        # self.thumb_tip[0] = self.thumb_tip[0] - self.middle_mcp[0]
+        # self.thumb_tip[1] = self.thumb_tip[1] - self.middle_mcp[1]
+        # self.thumb_tip[2] = self.thumb_tip[2] - self.middle_mcp[2]
+        
 
+        # self.index_tip[0] = self.index_tip[0] - self.middle_mcp[0]
+        # self.index_tip[1] = self.index_tip[1] - self.middle_mcp[1]
+        # self.index_tip[2] = self.index_tip[2] - self.middle_mcp[2]
+
+        # self.middle_tip[0] = self.middle_tip[0] - self.middle_mcp[0]
+        # self.middle_tip[1] = self.middle_tip[1] - self.middle_mcp[1]
+        # self.middle_tip[2] = self.middle_tip[2] - self.middle_mcp[2]
+        # # print("relative middle", self.middle_tip)
+
+        # self.ring_tip[0] = self.ring_tip[0] - self.middle_mcp[0]
+        # self.ring_tip[1] = self.ring_tip[1] - self.middle_mcp[1]
+        # self.ring_tip[2] = self.ring_tip[2] - self.middle_mcp[2]
 
 #     def calc_angle(self):
 #         m0 =  math.atan2(self.wrist[1] - self.thumb_cmc[1], (self.wrist[0] - self.thumb_cmc[0]))
@@ -146,7 +162,44 @@
 #         m16 = math.atan2(self.wrist[1] - self.thumb_cmc[1], (self.wrist[0] - self.thumb_cmc[1]))
 #         m17 = math.atan2(self.wrist[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[1]))
 
+        # m0 =  [(self.wrist[0] - self.thumb_cmc[0]), (self.wrist[1] - self.thumb_cmc[1]),(self.wrist[2] - self.thumb_cmc[2])]
+        # m1 =  [(self.thumb_mcp[0] - self.thumb_cmc[0]), (self.thumb_mcp[1] - self.thumb_cmc[1]), (self.thumb_mcp[2] - self.thumb_cmc[2])]
+        # m2 =  [(self.thumb_ip[0] - self.thumb_mcp[0]), (self.thumb_ip[1] - self.thumb_mcp[1]), (self.thumb_ip[2] - self.thumb_mcp[2])]
+        # m3 =  [(self.thumb_tip[0] - self.thumb_ip[0]), (self.thumb_tip[1] - self.thumb_ip[1]), (self.thumb_tip[2] - self.thumb_ip[2])]
 
+        # m4 =  [(self.wrist[0] - self.index_mcp[0]), (self.wrist[1] - self.index_mcp[1]), (self.wrist[2] - self.index_mcp[2])]
+        # m5 =  [(self.index_pip[0] - self.index_mcp[0]), (self.index_pip[1] - self.index_mcp[1]), (self.index_pip[2] - self.index_mcp[2])]
+        # m6 =  [(self.index_dip[0] - self.index_pip[0]), (self.index_dip[1] - self.index_pip[1]), (self.index_dip[2] - self.index_pip[2])]
+        # m7 =  [(self.index_tip[0] - self.index_dip[0]), (self.index_tip[1] - self.index_dip[1]), (self.index_tip[2] - self.index_dip[2])]
+
+        # m8 =  [(self.wrist[0] - self.middle_mcp[0]), (self.wrist[1] - self.middle_mcp[1]), (self.wrist[2] - self.middle_mcp[2])]
+        # m9 =  [(self.middle_pip[0] - self.middle_mcp[0]), (self.middle_pip[1] - self.middle_mcp[1]), (self.middle_pip[2] - self.middle_mcp[2])]
+        # m10 = [(self.middle_dip[0] - self.middle_pip[0]), (self.middle_dip[1] - self.middle_pip[1]), (self.middle_dip[2] - self.middle_pip[2])]
+        # m11 =  [(self.middle_tip[0] - self.middle_dip[0]), (self.middle_tip[1] - self.middle_dip[1]), (self.middle_tip[2] - self.middle_dip[2])]
+
+        # m12 =  [(self.wrist[0] - self.ring_mcp[0]), (self.wrist[1] - self.ring_mcp[1]), (self.wrist[2] - self.ring_mcp[2])]
+        # m13 =  [(self.ring_pip[0] - self.ring_mcp[0]), (self.ring_pip[1] - self.ring_mcp[1]), (self.ring_pip[2] - self.ring_mcp[2])]
+        # m14 =  [(self.ring_dip[0] - self.ring_pip[0]), (self.ring_dip[1] - self.ring_pip[1]), (self.ring_dip[2] - self.ring_pip[2])]
+        # m15 =  [(self.ring_tip[0] - self.ring_dip[0]), (self.ring_tip[1] - self.ring_dip[1]), (self.ring_tip[2] - self.ring_dip[2])]
+
+        # # m16 = math.atan2(self.self.thumb_mcp[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[1]))
+
+
+        # self.thumb_wrist = 1.5708 - np.arccos((m0[0]*m1[0] + m0[1]*m1[1] + m0[0]*m1[2]) / ((m0[0]**2 + m0[1]**2 + m0[2]**2)*(m1[0]**2 + m1[1]**2 + m1[2]**2))**0.5)
+        # self.thumb_base = np.arccos((m2[0]*m1[0] + m2[1]*m1[1] + m2[0]*m1[2]) / ((m1[0]**2 + m1[1]**2 + m1[2]**2)*(m2[0]**2 + m2[1]**2 + m2[2]**2))**0.5)
+        # self.thumb_knuckle = np.arccos((m2[0]*m3[0] + m2[1]*m3[1] + m2[0]*m3[2]) / ((m3[0]**2 + m3[1]**2 + m3[2]**2)*(m2[0]**2 + m2[1]**2 + m2[2]**2))**0.5)
+
+        # self.index_base = 1.5708 - np.arccos((m4[0]*m5[0] + m4[1]*m5[1] + m4[0]*m5[2]) / ((m4[0]**2 + m4[1]**2 + m4[2]**2)*(m5[0]**2 + m5[1]**2 + m5[2]**2))**0.5)
+        # self.index_knuckle = np.arccos((m6[0]*m5[0] + m6[1]*m5[1] + m6[0]*m5[2]) / ((m6[0]**2 + m6[1]**2 + m6[2]**2)*(m5[0]**2 + m5[1]**2 + m5[2]**2))**0.5)
+        # self.index_tip = np.arccos((m6[0]*m7[0] + m6[1]*m7[1] + m6[0]*m7[2]) / ((m6[0]**2 + m6[1]**2 + m6[2]**2)*(m7[0]**2 + m7[1]**2 + m7[2]**2))**0.5)
+
+        # self.middle_base = 1.5708 - np.arccos((m8[0]*m9[0] + m8[1]*m9[1] + m8[0]*m9[2]) / ((m8[0]**2 + m8[1]**2 + m8[2]**2)*(m9[0]**2 + m9[1]**2 + m9[2]**2))**0.5)
+        # self.middle_knuckle = np.arccos((m10[0]*m9[0] + m10[1]*m9[1] + m10[0]*m9[2]) / ((m10[0]**2 + m10[1]**2 + m10[2]**2)*(m9[0]**2 + m9[1]**2 + m9[2]**2))**0.5)
+        # self.middle_tip = np.arccos((m10[0]*m11[0] + m10[1]*m11[1] + m10[0]*m11[2]) / ((m10[0]**2 + m10[1]**2 + m10[2]**2)*(m11[0]**2 + m11[1]**2 + m11[2]**2))**0.5)
+
+        # self.ring_base = 1.5708 - np.arccos((m12[0]*m13[0] + m12[1]*m13[1] + m12[0]*m13[2]) / ((m12[0]**2 + m12[1]**2 + m12[2]**2)*(m13[0]**2 + m13[1]**2 + m13[2]**2))**0.5)
+        # self.ring_knuckle =  np.arccos((m14[0]*m13[0] + m14[1]*m13[1] + m14[0]*m13[2]) / ((m14[0]**2 + m14[1]**2 + m14[2]**2)*(m13[0]**2 + m13[1]**2 + m13[2]**2))**0.5)
+        # self.ring_tip = np.arccos((m14[0]*m15[0] + m14[1]*m15[1] + m14[0]*m15[2]) / ((m14[0]**2 + m14[1]**2 + m14[2]**2)*(m15[0]**2 + m15[1]**2 + m15[2]**2))**0.5)
 #         self.thumb_wrist = math.atan(abs((m0 - m1) / (1 + m0 * m1))) - 0.8
 #         self.thumb_index = math.atan(abs((m16 - m17) / (1 + m16 * m17)))
 #         self.thumb_base = math.atan(abs((m1 - m2) / (1 + m1 * m2))) 
@@ -272,107 +325,107 @@ class FingerTracking(Node):
 
 
     def get_indices(self, handLandmarks):
-        self.wrist = [handLandmarks.landmark[0].x, handLandmarks.landmark[0].y, handLandmarks.landmark[0].z]
+        self.wrist = [0.0, 0.0, 0.0]
 
-        self.thumb_cmc = [handLandmarks.landmark[1].x, handLandmarks.landmark[1].y, handLandmarks.landmark[1].z]
-        self.thumb_mcp = [handLandmarks.landmark[2].x, handLandmarks.landmark[2].y, handLandmarks.landmark[2].z]
-        self.thumb_ip = [handLandmarks.landmark[3].x, handLandmarks.landmark[3].y, handLandmarks.landmark[3].z]
-        self.thumb_tip = [handLandmarks.landmark[4].x, handLandmarks.landmark[4].y, handLandmarks.landmark[4].z]
+        self.thumb_cmc = [handLandmarks.landmark[1].x - handLandmarks.landmark[0].x, handLandmarks.landmark[1].y - handLandmarks.landmark[0].y, handLandmarks.landmark[1].z - handLandmarks.landmark[0].z]
+        self.thumb_mcp = [handLandmarks.landmark[2].x - handLandmarks.landmark[0].x, handLandmarks.landmark[2].y - handLandmarks.landmark[0].y, handLandmarks.landmark[2].z - handLandmarks.landmark[0].z]
+        self.thumb_ip = [handLandmarks.landmark[3].x - handLandmarks.landmark[0].x, handLandmarks.landmark[3].y - handLandmarks.landmark[0].y, handLandmarks.landmark[3].z - handLandmarks.landmark[0].z]
+        self.thumb_tip = [handLandmarks.landmark[4].x - handLandmarks.landmark[0].x, handLandmarks.landmark[4].y - handLandmarks.landmark[0].y, handLandmarks.landmark[4].z - handLandmarks.landmark[0].z]
 
-        self.index_mcp = [handLandmarks.landmark[5].x, handLandmarks.landmark[5].y, handLandmarks.landmark[5].z]
-        self.index_pip = [handLandmarks.landmark[6].x, handLandmarks.landmark[6].y, handLandmarks.landmark[6].z]
-        self.index_dip = [handLandmarks.landmark[7].x, handLandmarks.landmark[7].y, handLandmarks.landmark[7].z]
-        self.index_tip = [handLandmarks.landmark[8].x, handLandmarks.landmark[8].y, handLandmarks.landmark[8].z]
+        self.index_mcp = [handLandmarks.landmark[5].x - handLandmarks.landmark[0].x, handLandmarks.landmark[5].y - handLandmarks.landmark[0].y, handLandmarks.landmark[5].z - handLandmarks.landmark[0].z]
+        self.index_pip = [handLandmarks.landmark[6].x - handLandmarks.landmark[0].x, handLandmarks.landmark[6].y - handLandmarks.landmark[0].y, handLandmarks.landmark[6].z - handLandmarks.landmark[0].z]
+        self.index_dip = [handLandmarks.landmark[7].x - handLandmarks.landmark[0].x, handLandmarks.landmark[7].y - handLandmarks.landmark[0].y, handLandmarks.landmark[7].z - handLandmarks.landmark[0].z]
+        self.index_tip = [handLandmarks.landmark[8].x - handLandmarks.landmark[0].x, handLandmarks.landmark[8].y - handLandmarks.landmark[0].y, handLandmarks.landmark[8].z - handLandmarks.landmark[0].z]
 
-        self.middle_mcp = [handLandmarks.landmark[9].x, handLandmarks.landmark[9].y, handLandmarks.landmark[9].z]
-        self.middle_pip = [handLandmarks.landmark[10].x, handLandmarks.landmark[10].y, handLandmarks.landmark[10].z]
-        self.middle_dip = [handLandmarks.landmark[11].x, handLandmarks.landmark[11].y, handLandmarks.landmark[11].z]
-        self.middle_tip = [handLandmarks.landmark[12].x, handLandmarks.landmark[12].y, handLandmarks.landmark[12].z]
+        self.middle_mcp = [handLandmarks.landmark[9].x - handLandmarks.landmark[0].x, handLandmarks.landmark[9].y - handLandmarks.landmark[0].y, handLandmarks.landmark[9].z - handLandmarks.landmark[0].z]
+        self.middle_pip = [handLandmarks.landmark[10].x - handLandmarks.landmark[0].x, handLandmarks.landmark[10].y - handLandmarks.landmark[0].y, handLandmarks.landmark[10].z - handLandmarks.landmark[0].z]
+        self.middle_dip = [handLandmarks.landmark[11].x - handLandmarks.landmark[0].x, handLandmarks.landmark[11].y - handLandmarks.landmark[0].y, handLandmarks.landmark[11].z - handLandmarks.landmark[0].z]
+        self.middle_tip = [handLandmarks.landmark[12].x - handLandmarks.landmark[0].x, handLandmarks.landmark[12].y - handLandmarks.landmark[0].y, handLandmarks.landmark[12].z - handLandmarks.landmark[0].z]
 
-        self.ring_mcp = [handLandmarks.landmark[13].x, handLandmarks.landmark[13].y, handLandmarks.landmark[13].z]
-        self.ring_pip = [handLandmarks.landmark[14].x, handLandmarks.landmark[14].y, handLandmarks.landmark[14].z]
-        self.ring_dip = [handLandmarks.landmark[15].x, handLandmarks.landmark[15].y, handLandmarks.landmark[15].z]
-        self.ring_tip = [handLandmarks.landmark[16].x, handLandmarks.landmark[16].y, handLandmarks.landmark[16].z]
-
-        self.thumb_tip[0] = self.thumb_tip[0] - self.middle_mcp[0]
-        self.thumb_tip[1] = self.thumb_tip[1] - self.middle_mcp[1]
-        self.thumb_tip[2] = self.thumb_tip[2] - self.middle_mcp[2]
-        
-
-        self.index_tip[0] = self.index_tip[0] - self.middle_mcp[0]
-        self.index_tip[1] = self.index_tip[1] - self.middle_mcp[1]
-        self.index_tip[2] = self.index_tip[2] - self.middle_mcp[2]
-
-        self.middle_tip[0] = self.middle_tip[0] - self.middle_mcp[0]
-        self.middle_tip[1] = self.middle_tip[1] - self.middle_mcp[1]
-        self.middle_tip[2] = self.middle_tip[2] - self.middle_mcp[2]
-        print("relative middle", self.middle_tip)
-
-        self.ring_tip[0] = self.ring_tip[0] - self.middle_mcp[0]
-        self.ring_tip[1] = self.ring_tip[1] - self.middle_mcp[1]
-        self.ring_tip[2] = self.ring_tip[2] - self.middle_mcp[2]
-
+        self.ring_mcp = [handLandmarks.landmark[13].x - handLandmarks.landmark[0].x, handLandmarks.landmark[13].y - handLandmarks.landmark[0].y, handLandmarks.landmark[13].z - handLandmarks.landmark[0].z]
+        self.ring_pip = [handLandmarks.landmark[14].x - handLandmarks.landmark[0].x, handLandmarks.landmark[14].y - handLandmarks.landmark[0].y, handLandmarks.landmark[14].z - handLandmarks.landmark[0].z]
+        self.ring_dip = [handLandmarks.landmark[15].x - handLandmarks.landmark[0].x, handLandmarks.landmark[15].y - handLandmarks.landmark[0].y, handLandmarks.landmark[15].z - handLandmarks.landmark[0].z]
+        self.ring_tip = [handLandmarks.landmark[16].x - handLandmarks.landmark[0].x, handLandmarks.landmark[16].y - handLandmarks.landmark[0].y, handLandmarks.landmark[16].z - handLandmarks.landmark[0].z]
 
     def calc_angle(self):
-        # m0 =  math.atan2(self.wrist[1] - self.thumb_cmc[1], (self.wrist[0] - self.thumb_cmc[0]))
-        # m1 =  math.atan2(self.thumb_mcp[1] - self.thumb_cmc[1], (self.thumb_mcp[0] - self.thumb_cmc[0]))
-        # m2 =  math.atan2(self.thumb_ip[1] - self.thumb_mcp[1], (self.thumb_ip[0] - self.thumb_mcp[0]))
-        # m3 =  math.atan2(self.thumb_tip[1] - self.thumb_ip[1], (self.thumb_tip[0] - self.thumb_ip[0]))
+        self.index_knuckle = self.GetAngleABC(self.index_dip, self.index_pip, self.index_mcp)
+        if(self.index_knuckle > 120):
+            self.index_knuckle = 120
+        elif (self.index_knuckle<5):
+            self.index_knuckle=5
+        self.index_knuckle = (self.index_knuckle-5) * (0-95)/(5-120)
 
-        # m4 =  math.atan2(self.wrist[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[0]))
-        # m5 =  math.atan2(self.index_pip[1] - self.index_mcp[1], (self.index_pip[0] - self.index_mcp[0]))
-        # m6 =  math.atan2(self.index_dip[1] - self.index_pip[1], (self.index_dip[0] - self.index_pip[0]))
-        # m7 =  math.atan2(self.index_tip[1] - self.index_dip[1], (self.index_tip[0] - self.index_dip[0]))
+        self.index_base = self.GetAngleABC(self.index_pip, self.index_mcp, self.wrist) 
+        if(self.index_base > 35):
+            self.index_base = 35
+        elif (self.index_base<5):
+            self.index_base=5
+        self.index_base = (self.index_base-5) * (0-90)/(5-35)
 
-        # m8 =  math.atan2(self.wrist[1] - self.middle_mcp[1], (self.wrist[0] - self.middle_mcp[0]))
-        # m9 =  math.atan2(self.middle_pip[1] - self.middle_mcp[1], (self.middle_pip[0] - self.middle_mcp[0]))
-        # m10 =  math.atan2(self.middle_dip[1] - self.middle_pip[1], (self.middle_dip[0] - self.middle_pip[0]))
-        # m11 =  math.atan2(self.middle_tip[1] - self.middle_dip[1], (self.middle_tip[0] - self.middle_dip[0]))
+        self.index_top = self.GetAngleABC(self.index_tip, self.index_dip, self.index_pip)
+        if(self.index_top > 35):
+            self.index_top = 35
+        elif (self.index_top<0):
+            self.index_top=0
+        self.index_top = (self.index_top) * (0-90)/(0-35)
 
-        # m12 =  math.atan2(self.wrist[1] - self.ring_mcp[1], (self.wrist[0] - self.ring_mcp[0]))
-        # m13 =  math.atan2(self.ring_pip[1] - self.ring_mcp[1], (self.ring_pip[0] - self.ring_mcp[0]))
-        # m14 =  math.atan2(self.ring_dip[1] - self.ring_pip[1], (self.ring_dip[0] - self.ring_pip[0]))
-        # m15 =  math.atan2(self.ring_tip[1] - self.ring_dip[1], (self.ring_tip[0] - self.ring_dip[0]))
+        m4 =  math.atan2(self.wrist[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[0]))
+        m5 =  math.atan2(self.index_pip[1] - self.index_mcp[1], (self.index_pip[0] - self.index_mcp[0]))
+        self.index_twist = math.atan(abs((m4 - m5) / (1 + m4 * m5))) *180.0/ 3.141592653589793
+        if(self.index_twist > 70):
+            self.index_twist = 70
+        elif (self.index_twist<60):
+            self.index_twist=60
+        self.index_twist = (self.index_twist-65) * (-27-27)/(60-70)
 
-        m0 =  [(self.wrist[0] - self.thumb_cmc[0]), (self.wrist[1] - self.thumb_cmc[1]),(self.wrist[2] - self.thumb_cmc[2])]
-        m1 =  [(self.thumb_mcp[0] - self.thumb_cmc[0]), (self.thumb_mcp[1] - self.thumb_cmc[1]), (self.thumb_mcp[2] - self.thumb_cmc[2])]
-        m2 =  [(self.thumb_ip[0] - self.thumb_mcp[0]), (self.thumb_ip[1] - self.thumb_mcp[1]), (self.thumb_ip[2] - self.thumb_mcp[2])]
-        m3 =  [(self.thumb_tip[0] - self.thumb_ip[0]), (self.thumb_tip[1] - self.thumb_ip[1]), (self.thumb_tip[2] - self.thumb_ip[2])]
+        self.thumb_wrist = self.GetAngleABC(self.index_mcp, self.wrist, self.thumb_ip)
+        if(self.thumb_wrist> 165):
+            self.thumb_wrist= 165
+        elif(self.thumb_wrist< 145):
+            self.thumb_wrist=145
+        self.thumb_wrist = 15 + (self.thumb_wrist - 145)* (15-80)/(145-165)
 
-        m4 =  [(self.wrist[0] - self.index_mcp[0]), (self.wrist[1] - self.index_mcp[1]), (self.wrist[2] - self.index_mcp[2])]
-        m5 =  [(self.index_pip[0] - self.index_mcp[0]), (self.index_pip[1] - self.index_mcp[1]), (self.index_pip[2] - self.index_mcp[2])]
-        m6 =  [(self.index_dip[0] - self.index_pip[0]), (self.index_dip[1] - self.index_pip[1]), (self.index_dip[2] - self.index_pip[2])]
-        m7 =  [(self.index_tip[0] - self.index_dip[0]), (self.index_tip[1] - self.index_dip[1]), (self.index_tip[2] - self.index_dip[2])]
+        m16 = math.atan2(self.wrist[1] - self.thumb_ip[1], (self.wrist[0] - self.thumb_ip[0]))
+        m17 = math.atan2(self.wrist[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[0]))
+        self.thumb_index = 15 - math.atan(abs((m16 - m17) / (1 + m16 * m17))) *180.0/ 3.141592653589793
+        if(self.thumb_index> 15):
+            self.thumb_index= 15
+        elif(self.thumb_index< 5):
+            self.thumb_index=5
+        self.thumb_index = -10 + (self.thumb_index - 5)* (-10-95)/(5-15)
 
-        m8 =  [(self.wrist[0] - self.middle_mcp[0]), (self.wrist[1] - self.middle_mcp[1]), (self.wrist[2] - self.middle_mcp[2])]
-        m9 =  [(self.middle_pip[0] - self.middle_mcp[0]), (self.middle_pip[1] - self.middle_mcp[1]), (self.middle_pip[2] - self.middle_mcp[2])]
-        m10 = [(self.middle_dip[0] - self.middle_pip[0]), (self.middle_dip[1] - self.middle_pip[1]), (self.middle_dip[2] - self.middle_pip[2])]
-        m11 =  [(self.middle_tip[0] - self.middle_dip[0]), (self.middle_tip[1] - self.middle_dip[1]), (self.middle_tip[2] - self.middle_dip[2])]
+        self.thumb_twist = self.GetAngleABC(self.thumb_ip, self.thumb_mcp, self.thumb_cmc)
+        if(self.thumb_twist> 30):
+            self.thumb_twist= 30
+        elif(self.thumb_twist< 5):
+            self.thumb_twist=5
+        self.thumb_twist = -6 + (self.thumb_twist - 5)* (-6-67)/(5-30)
 
-        m12 =  [(self.wrist[0] - self.ring_mcp[0]), (self.wrist[1] - self.ring_mcp[1]), (self.wrist[2] - self.ring_mcp[2])]
-        m13 =  [(self.ring_pip[0] - self.ring_mcp[0]), (self.ring_pip[1] - self.ring_mcp[1]), (self.ring_pip[2] - self.ring_mcp[2])]
-        m14 =  [(self.ring_dip[0] - self.ring_pip[0]), (self.ring_dip[1] - self.ring_pip[1]), (self.ring_dip[2] - self.ring_pip[2])]
-        m15 =  [(self.ring_tip[0] - self.ring_dip[0]), (self.ring_tip[1] - self.ring_dip[1]), (self.ring_tip[2] - self.ring_dip[2])]
+        self.thumb_knuckle = self.GetAngleABC(self.thumb_tip, self.thumb_ip, self.thumb_mcp)
+        if(self.thumb_tip[0] > self.thumb_ip[0]):
+            self.thumb_knuckle = 30 - self.thumb_knuckle
+        # if(self.thumb_knuckle > 25):
+        #     self.thumb_knuckle = 25
+        # elif(self.thumb_knuckle < 0):
+        #     self.thumb_knuckle = 0
+        # self.thumb_knuckle = (self.thumb_knuckle-0)* (0-95)/(0-25)
 
-        # m16 = math.atan2(self.self.thumb_mcp[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[1]))
+    def GetAngleABC(self, a, b, c):
+        ab = [b[0] - a[0], b[1] - a[1], b[2] - a[2]]
+        bc = [c[0] - b[0], c[1] - b[1], c[2] - b[2]]
 
+        abVec = (ab[0] * ab[0] + ab[1] * ab[1] + ab[2] * ab[2])**0.5
+        bcVec = (bc[0] * bc[0] + bc[1] * bc[1] + bc[2] * bc[2])**0.5
+        try:
+            abNorm = [ab[0] / abVec, ab[1] / abVec, ab[2] / abVec]
+            bcNorm = [bc[0] / bcVec, bc[1] / bcVec, bc[2] / bcVec]
+        except ZeroDivisionError:
+            abNorm = [ab[0] / (abVec+0.001), ab[1] / (abVec+0.001), ab[2] / (abVec+0.001)]
+            bcNorm = [bc[0] / (bcVec+0.001), bc[1] / (bcVec+0.001), bc[2] / (bcVec+0.001)]
 
-        self.thumb_wrist = 1.5708 - np.arccos((m0[0]*m1[0] + m0[1]*m1[1] + m0[0]*m1[2]) / ((m0[0]**2 + m0[1]**2 + m0[2]**2)*(m1[0]**2 + m1[1]**2 + m1[2]**2))**0.5)
-        self.thumb_base = np.arccos((m2[0]*m1[0] + m2[1]*m1[1] + m2[0]*m1[2]) / ((m1[0]**2 + m1[1]**2 + m1[2]**2)*(m2[0]**2 + m2[1]**2 + m2[2]**2))**0.5)
-        self.thumb_knuckle = np.arccos((m2[0]*m3[0] + m2[1]*m3[1] + m2[0]*m3[2]) / ((m3[0]**2 + m3[1]**2 + m3[2]**2)*(m2[0]**2 + m2[1]**2 + m2[2]**2))**0.5)
-
-        self.index_base = 1.5708 - np.arccos((m4[0]*m5[0] + m4[1]*m5[1] + m4[0]*m5[2]) / ((m4[0]**2 + m4[1]**2 + m4[2]**2)*(m5[0]**2 + m5[1]**2 + m5[2]**2))**0.5)
-        self.index_knuckle = np.arccos((m6[0]*m5[0] + m6[1]*m5[1] + m6[0]*m5[2]) / ((m6[0]**2 + m6[1]**2 + m6[2]**2)*(m5[0]**2 + m5[1]**2 + m5[2]**2))**0.5)
-        self.index_tip = np.arccos((m6[0]*m7[0] + m6[1]*m7[1] + m6[0]*m7[2]) / ((m6[0]**2 + m6[1]**2 + m6[2]**2)*(m7[0]**2 + m7[1]**2 + m7[2]**2))**0.5)
-
-        self.middle_base = 1.5708 - np.arccos((m8[0]*m9[0] + m8[1]*m9[1] + m8[0]*m9[2]) / ((m8[0]**2 + m8[1]**2 + m8[2]**2)*(m9[0]**2 + m9[1]**2 + m9[2]**2))**0.5)
-        self.middle_knuckle = np.arccos((m10[0]*m9[0] + m10[1]*m9[1] + m10[0]*m9[2]) / ((m10[0]**2 + m10[1]**2 + m10[2]**2)*(m9[0]**2 + m9[1]**2 + m9[2]**2))**0.5)
-        self.middle_tip = np.arccos((m10[0]*m11[0] + m10[1]*m11[1] + m10[0]*m11[2]) / ((m10[0]**2 + m10[1]**2 + m10[2]**2)*(m11[0]**2 + m11[1]**2 + m11[2]**2))**0.5)
-
-        self.ring_base = 1.5708 - np.arccos((m12[0]*m13[0] + m12[1]*m13[1] + m12[0]*m13[2]) / ((m12[0]**2 + m12[1]**2 + m12[2]**2)*(m13[0]**2 + m13[1]**2 + m13[2]**2))**0.5)
-        self.ring_knuckle =  np.arccos((m14[0]*m13[0] + m14[1]*m13[1] + m14[0]*m13[2]) / ((m14[0]**2 + m14[1]**2 + m14[2]**2)*(m13[0]**2 + m13[1]**2 + m13[2]**2))**0.5)
-        self.ring_tip = np.arccos((m14[0]*m15[0] + m14[1]*m15[1] + m14[0]*m15[2]) / ((m14[0]**2 + m14[1]**2 + m14[2]**2)*(m15[0]**2 + m15[1]**2 + m15[2]**2))**0.5)
-
+        res = abNorm[0] * bcNorm[0] + abNorm[1] * bcNorm[1] + abNorm[2] * bcNorm[2]
+        
+        return np.arccos(res)*180.0/ 3.141592653589793
 
     def timer_callback(self):
         # self.cap = cv2.VideoCapture(0)
@@ -402,19 +455,11 @@ class FingerTracking(Node):
                     for hand_landmarks in results.multi_hand_landmarks:
                         
                         self.get_indices(hand_landmarks)
-                        # self.calc_angle()
-                        # self.angles.data = [0.0, self.index_base, self.index_knuckle, self.index_tip,
-                        # 0.0, self.middle_base, self.middle_knuckle, self.middle_tip,
-                        # 0.0, self.ring_base, self.ring_knuckle, self.ring_tip,
-                        # self.thumb_wrist, 0.0, self.thumb_base, self.thumb_knuckle,]
+                        self.calc_angle()
+                        print(self.thumb_knuckle)
+
                         # self.ang_pub.publish(self.angles)
-                        # self.angles.data = [self.index_tip, self.thumb_tip, self.middle_tip, self.ring_tip]
-                        self.mid_pose.pose.position.x = self.middle_tip[2]
-                        self.mid_pose.pose.position.y = -self.middle_tip[0]
-                        self.mid_pose.pose.position.z = (-self.middle_tip[1]/0.25)*0.1095
-                        # print(self.mid_pose)
-                        # self.ang_pub.publish(self.angles)
-                        self.middle_pub.publish(self.mid_pose)
+                        # self.middle_pub.publish(self.mid_pose)
                         self.mp_drawing.draw_landmarks(
                             image,
                             hand_landmarks,
