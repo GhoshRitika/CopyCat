@@ -1,13 +1,12 @@
 Panels:
   - Class: rviz_common/Displays
-    Help Height: 0
+    Help Height: 70
     Name: Displays
     Property Tree Widget:
       Expanded:
         - /MotionPlanning1
-        - /MotionPlanning1/Planning Request1
       Splitter Ratio: 0.5
-    Tree Height: 253
+    Tree Height: 183
   - Class: rviz_common/Help
     Name: Help
   - Class: rviz_common/Views
@@ -36,12 +35,12 @@ Visualization Manager:
       Plane Cell Count: 10
       Reference Frame: <Fixed Frame>
       Value: true
-    - Acceleration_Scaling_Factor: 0.1
+    - Acceleration_Scaling_Factor: 0.5
       Class: moveit_rviz_plugin/MotionPlanning
       Enabled: true
       Move Group Namespace: ""
       MoveIt_Allow_Approximate_IK: true
-      MoveIt_Allow_External_Program: true
+      MoveIt_Allow_External_Program: false
       MoveIt_Allow_Replanning: false
       MoveIt_Allow_Sensor_Positioning: false
       MoveIt_Planning_Attempts: 10
@@ -201,7 +200,7 @@ Visualization Manager:
         Show Workspace: false
         Start State Alpha: 1
         Start State Color: 0; 255; 0
-      Planning Scene Topic: planning_scene
+      Planning Scene Topic: monitored_planning_scene
       Robot Description: robot_description
       Scene Geometry:
         Scene Alpha: 1
@@ -327,7 +326,7 @@ Visualization Manager:
         Show Robot Collision: false
         Show Robot Visual: true
       Value: true
-      Velocity_Scaling_Factor: 0.1
+      Velocity_Scaling_Factor: 0.5
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -346,25 +345,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz_default_plugins/Orbit
-      Distance: 0.9288082122802734
+      Distance: 2
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.0016376348212361336
-        Y: 0.10117701441049576
-        Z: -0.00517420656979084
+        X: -0.10000000149011612
+        Y: 0.25
+        Z: 0.30000001192092896
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.574999988079071
+      Pitch: 0.5
       Target Frame: palm_link
       Value: Orbit (rviz_default_plugins)
-      Yaw: 5.5551886558532715
+      Yaw: -0.6230000257492065
     Saved: ~
 Window Geometry:
   Displays:

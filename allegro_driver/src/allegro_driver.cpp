@@ -400,9 +400,11 @@ class AllegroDriver : public rclcpp::Node
     AllegroDriver()
     : Node("allegro_driver"), count_(0.0)
     {
-    //   rock_server_= create_service<std_srvs::srv::Empty>("rock", std::bind(&AllegroDriver::rock_callback, this, std::placeholders::_1, std::placeholders::_2));
-    //   paper_server_= create_service<std_srvs::srv::Empty>("paper", std::bind(&AllegroDriver::paper_callback, this, std::placeholders::_1, std::placeholders::_2));
-    //   scissor_server_= create_service<std_srvs::srv::Empty>("scissor", std::bind(&AllegroDriver::scissor_callback, this, std::placeholders::_1, std::placeholders::_2));
+    //   ready_server_= create_service<std_srvs::srv::Empty>("ready", std::bind(&AllegroDriver::ready_callback, this, std::placeholders::_1, std::placeholders::_2));
+    //   grasp3_server_= create_service<std_srvs::srv::Empty>("grasp3", std::bind(&AllegroDriver::grasp3_callback, this, std::placeholders::_1, std::placeholders::_2));
+    //   grasp4_server_= create_service<std_srvs::srv::Empty>("grasp4", std::bind(&AllegroDriver::grasp4_callback, this, std::placeholders::_1, std::placeholders::_2));
+    //   pinchit_server_= create_service<std_srvs::srv::Empty>("pinchit", std::bind(&AllegroDriver::pinchit_callback, this, std::placeholders::_1, std::placeholders::_2));
+    //   pinchmt_server_= create_service<std_srvs::srv::Empty>("pinchmt", std::bind(&AllegroDriver::pinchmt_callback, this, std::placeholders::_1, std::placeholders::_2));
     //   trial_server_= create_service<std_srvs::srv::Empty>("trial", std::bind(&AllegroDriver::trial_callback, this, std::placeholders::_1, std::placeholders::_2));
     //   joint_state_pub = create_publisher<sensor_msgs::msg::JointState>("~/joint_state", 10);
     // joint_sub = create_subscription<std_msgs::msg::Float64MultiArray>("Joint_angles", 10, std::bind(&AllegroDriver::angle_callback, this, std::placeholders::_1));
@@ -417,24 +419,35 @@ class AllegroDriver : public rclcpp::Node
         // count_ += delT; 
         
         // if (input == '1'){
-        //     MotionRock();
+        //     pBHand->SetMotionType(eMotionType_READY);
+        //     sleep(5);
         // }
         // else if (input == '2'){
-        //     MotionPaper();
+        //     pBHand->SetMotionType(eMotionType_GRASP_3);
+        //     sleep(5);
         // }
         // else if(input == '3'){
-        //     MotionScissors();
+        //     pBHand->SetMotionType(eMotionType_GRASP_4);
+        //     sleep(5);
+        // }
+        // else if(input == '4'){
+        //     pBHand->SetMotionType(eMotionType_PINCH_IT);
+        //     sleep(5);
+        // }
+        // else if(input == '4'){
+        //     pBHand->SetMotionType(eMotionType_PINCH_MT);
+        //     sleep(5);
         // }
         // else if (input == 'y'){
         //     pBHand->SetMotionType(eMotionType_GRAVITY_COMP);
         //     sleep(5);
-            
-        //     std::copy(q, q+MAX_DOF, q_temp);
-        //     // RCLCPP_INFO(this->get_logger(), "Copying: %lf %lf %lf %lf", q_temp[0],q_temp[1],q_temp[2],q_temp[3]);
-        //     RCLCPP_INFO(this->get_logger(), "finger 0: %lf %lf %lf %lf", q[0],q[1],q[2],q[3]);
-        //     RCLCPP_INFO(this->get_logger(), "finger 1: %lf %lf %lf %lf", q[4],q[5],q[6],q[7]);
-        //     RCLCPP_INFO(this->get_logger(), "finger 2: %lf %lf %lf %lf", q[8],q[9],q[10],q[11]);
-        //     RCLCPP_INFO(this->get_logger(), "finger 3: %lf %lf %lf %lf", q[12],q[13],q[14],q[15]);
+        // }
+        // std::copy(q, q+MAX_DOF, q_temp);
+        // RCLCPP_INFO(this->get_logger(), "Joint state: %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf", q_temp[0],q_temp[1],q_temp[2],q_temp[3]
+        //                                                 ,q_temp[4],q_temp[5],q_temp[6],q_temp[7]
+        //                                                 ,q_temp[8],q_temp[9],q_temp[10],q_temp[11]
+        //                                                 ,q_temp[12],q_temp[13],q_temp[14],q_temp[15]);
+
         //     input = 'k';
         // }
         // else if (input == 'n'){
@@ -494,22 +507,22 @@ class AllegroDriver : public rclcpp::Node
         // std::vector<double> qnew(msg.data);
         // *qnew= &msg.data;
         // name:
-// 0- joint_1.0 
-// 1- joint_2.0
-// 2- joint_11.0
-// 3- joint_10.0
-// 4- joint_15.0
-// 5- joint_9.0
-// 6- joint_8.0
-// 7- joint_7.0
-// 8- joint_13.0
-// 9- joint_4.0
-// 10- joint_5.0
-// 11- joint_14.0
-// 12- joint_0.0
-// 13- joint_12.0
-// 14- joint_6.0
-// 15- joint_3.0
+            // 0- joint_1.0 
+            // 1- joint_2.0
+            // 2- joint_11.0
+            // 3- joint_10.0
+            // 4- joint_15.0
+            // 5- joint_9.0
+            // 6- joint_8.0
+            // 7- joint_7.0
+            // 8- joint_13.0
+            // 9- joint_4.0
+            // 10- joint_5.0
+            // 11- joint_14.0
+            // 12- joint_0.0
+            // 13- joint_12.0
+            // 14- joint_6.0
+            // 15- joint_3.0
 
         qnew[0]=msg.position[12]; //index twist
         qnew[1]=msg.position[0];  //index base
@@ -529,17 +542,27 @@ class AllegroDriver : public rclcpp::Node
         qnew[15]=msg.position[4]; //joint 15
         // std::copy(msg.data.begin(), msg.data.end(), qnew);
     }
-    // void rock_callback(std_srvs::srv::Empty::Request::SharedPtr,
+    // void ready_callback(std_srvs::srv::Empty::Request::SharedPtr,
     //                     std_srvs::srv::Empty::Response::SharedPtr)
     // {
     //     input = '1';
     // }
-    // void paper_callback(std_srvs::srv::Empty::Request::SharedPtr,
+    // void grasp3_callback(std_srvs::srv::Empty::Request::SharedPtr,
     //                     std_srvs::srv::Empty::Response::SharedPtr)
     // {
     //     input = '2';
     // }
-    // void scissor_callback(std_srvs::srv::Empty::Request::SharedPtr,
+    // void grasp4_callback(std_srvs::srv::Empty::Request::SharedPtr,
+    //                     std_srvs::srv::Empty::Response::SharedPtr)
+    // {
+    //     input = '3';
+    // }
+    // void pinchit_callback(std_srvs::srv::Empty::Request::SharedPtr,
+    //                     std_srvs::srv::Empty::Response::SharedPtr)
+    // {
+    //     input = '3';
+    // }
+    // void pinchmt_callback(std_srvs::srv::Empty::Request::SharedPtr,
     //                     std_srvs::srv::Empty::Response::SharedPtr)
     // {
     //     input = '3';
@@ -570,9 +593,11 @@ class AllegroDriver : public rclcpp::Node
     rclcpp::TimerBase::SharedPtr timer_;
     // rclcpp::Subscription<std_msgs::msg::Float64MultiArray>::SharedPtr joint_sub;
     rclcpp::Subscription<sensor_msgs::msg::JointState>::SharedPtr jointstates_sub;
-    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr rock_server_;
-    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr paper_server_;
-    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr scissor_server_;
+    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr ready_server_;
+    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr grasp3_server_;
+    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr grasp4_server_;
+    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr pinchit_server_;
+    // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr pinchmt_server_;
     // rclcpp::Service<std_srvs::srv::Empty>::SharedPtr trial_server_;
     size_t count_;
     char input='k';

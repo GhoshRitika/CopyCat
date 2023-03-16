@@ -1,0 +1,27 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: allegro_driver
+    relative_path: urdf/AllegroHandRight.urdf.xacro
+  srdf:
+    relative_path: config/allegro_hand_right.srdf
+  package_settings:
+    author_name: Ritika Ghosh
+    author_email: ritikaghosh2023@u.northwestern.edu
+    generated_timestamp: 1678995551
+  control_xacro:
+    command:
+      - position
+      - velocity
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+      - velocity
+    state:
+      - position
+      - velocity

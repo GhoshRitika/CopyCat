@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This does not replace URDF, and is not an extension of URDF.
+    This is a format for representing semantic information about the robot structure.
+    A URDF file must exist for this robot as well, where the joints and the links that are referenced are defined
+-->
+<robot name="allegro_hand_right">
+    <!--GROUPS: Representation of a set of joints and links. This can be useful for specifying DOF to plan for, defining arms, end effectors, etc-->
+    <!--LINKS: When a link is specified, the parent joint of that link (if it exists) is automatically included-->
+    <!--JOINTS: When a joint is specified, the child link of that joint (which will always exist) is automatically included-->
+    <!--CHAINS: When a chain is specified, all the links along the chain (including endpoints) are included in the group. Additionally, all the joints that are parents to included links are also included. This means that joints along the chain and the parent joint of the base link are included in the group-->
+    <!--SUBGROUPS: Groups can also be formed by referencing to already defined group names-->
+    <group name="allegro_hand">
+        <joint name="virtual_joint"/>
+        <joint name="joint_0.0"/>
+        <joint name="joint_1.0"/>
+        <joint name="joint_2.0"/>
+        <joint name="joint_3.0"/>
+        <joint name="joint_12.0"/>
+        <joint name="joint_13.0"/>
+        <joint name="joint_14.0"/>
+        <joint name="joint_15.0"/>
+        <joint name="joint_4.0"/>
+        <joint name="joint_5.0"/>
+        <joint name="joint_6.0"/>
+        <joint name="joint_7.0"/>
+        <joint name="joint_8.0"/>
+        <joint name="joint_9.0"/>
+        <joint name="joint_10.0"/>
+        <joint name="joint_11.0"/>
+    </group>
+    <group name="tip">
+        <joint name="joint_15_tip"/>
+        <joint name="joint_3_tip"/>
+        <joint name="joint_7_tip"/>
+        <joint name="joint_11_tip"/>
+    </group>
+    <group name="index">
+        <joint name="virtual_joint"/>
+        <joint name="joint_0.0"/>
+        <joint name="joint_1.0"/>
+        <joint name="joint_2.0"/>
+        <joint name="joint_3.0"/>
+    </group>
+    <group name="thumb">
+        <joint name="virtual_joint"/>
+        <joint name="joint_12.0"/>
+        <joint name="joint_13.0"/>
+        <joint name="joint_14.0"/>
+        <joint name="joint_15.0"/>
+    </group>
+    <group name="middle">
+        <joint name="virtual_joint"/>
+        <joint name="joint_4.0"/>
+        <joint name="joint_5.0"/>
+        <joint name="joint_6.0"/>
+        <joint name="joint_7.0"/>
+    </group>
+    <group name="ring">
+        <joint name="virtual_joint"/>
+        <joint name="joint_8.0"/>
+        <joint name="joint_9.0"/>
+        <joint name="joint_10.0"/>
+        <joint name="joint_11.0"/>
+    </group>
+    <group name="index_tip">
+        <link name="link_3_tip"/>
+    </group>
+    <group name="thumb_tip">
+        <link name="link_15_tip"/>
+    </group>
+    <group name="middle_tip">
+        <link name="link_7_tip"/>
+    </group>
+    <group name="ring_tip">
+        <link name="link_11_tip"/>
+    </group>
+    <!--GROUP STATES: Purpose: Define a named state for a particular group, in terms of joint values. This is useful to define states like 'folded arms'-->
+    <group_state name="Home" group="allegro_hand">
+        <joint name="joint_0.0" value="0"/>
+        <joint name="joint_1.0" value="0"/>
+        <joint name="joint_10.0" value="0"/>
+        <joint name="joint_11.0" value="0"/>
+        <joint name="joint_12.0" value="0.8295"/>
+        <joint name="joint_13.0" value="0"/>
+        <joint name="joint_14.0" value="0.3681"/>
+        <joint name="joint_15.0" value="0"/>
+        <joint name="joint_2.0" value="0"/>
+        <joint name="joint_3.0" value="0"/>
+        <joint name="joint_4.0" value="0"/>
+        <joint name="joint_5.0" value="0"/>
+        <joint name="joint_6.0" value="0"/>
+        <joint name="joint_7.0" value="0"/>
+        <joint name="joint_8.0" value="0"/>
+        <joint name="joint_9.0" value="0"/>
+    </group_state>
+    <group_state name="paper" group="allegro_hand">
+        <joint name="joint_0.0" value="-0.122"/>
+        <joint name="joint_1.0" value="0.4"/>
+        <joint name="joint_10.0" value="0.6"/>
+        <joint name="joint_11.0" value="-0.0528"/>
+        <joint name="joint_12.0" value="0.5284"/>
+        <joint name="joint_13.0" value="0.3693"/>
+        <joint name="joint_14.0" value="0.8977"/>
+        <joint name="joint_15.0" value="0.4863"/>
+        <joint name="joint_2.0" value="0.6"/>
+        <joint name="joint_3.0" value="-0.07"/>
+        <joint name="joint_4.0" value="0.0312"/>
+        <joint name="joint_5.0" value="0.4"/>
+        <joint name="joint_6.0" value="0.6"/>
+        <joint name="joint_7.0" value="0"/>
+        <joint name="joint_8.0" value="0.1767"/>
+        <joint name="joint_9.0" value="0.4"/>
+    </group_state>
+    <group_state name="rock" group="allegro_hand">
+        <joint name="joint_0.0" value="-0.1194"/>
+        <joint name="joint_1.0" value="1.2068"/>
+        <joint name="joint_10.0" value="1.3881"/>
+        <joint name="joint_11.0" value="1.0122"/>
+        <joint name="joint_12.0" value="0.6017"/>
+        <joint name="joint_13.0" value="0.2976"/>
+        <joint name="joint_14.0" value="0.9034"/>
+        <joint name="joint_15.0" value="0.7929"/>
+        <joint name="joint_2.0" value="1"/>
+        <joint name="joint_3.0" value="1.4042"/>
+        <joint name="joint_4.0" value="-0.0093"/>
+        <joint name="joint_5.0" value="1.2481"/>
+        <joint name="joint_6.0" value="1.4073"/>
+        <joint name="joint_7.0" value="0.8163"/>
+        <joint name="joint_8.0" value="0.1116"/>
+        <joint name="joint_9.0" value="1.2712"/>
+    </group_state>
+    <group_state name="scissors" group="allegro_hand">
+        <joint name="joint_0.0" value="0.0885"/>
+        <joint name="joint_1.0" value="0.4"/>
+        <joint name="joint_10.0" value="1.1346"/>
+        <joint name="joint_11.0" value="1.0244"/>
+        <joint name="joint_12.0" value="1"/>
+        <joint name="joint_13.0" value="0.6331"/>
+        <joint name="joint_14.0" value="1.3509"/>
+        <joint name="joint_15.0" value="1"/>
+        <joint name="joint_2.0" value="0.6"/>
+        <joint name="joint_3.0" value="-0.0769"/>
+        <joint name="joint_4.0" value="0.0312"/>
+        <joint name="joint_5.0" value="0.4"/>
+        <joint name="joint_6.0" value="0.6"/>
+        <joint name="joint_7.0" value="0"/>
+        <joint name="joint_8.0" value="0.1019"/>
+        <joint name="joint_9.0" value="1.2375"/>
+    </group_state>
+    <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
+    <end_effector name="index_tip" parent_link="link_3" group="index_tip" parent_group="allegro_hand"/>
+    <end_effector name="thumb_tip" parent_link="link_15" group="thumb_tip" parent_group="allegro_hand"/>
+    <end_effector name="middle_tip" parent_link="link_7" group="middle_tip" parent_group="allegro_hand"/>
+    <end_effector name="ring_tip" parent_link="link_11" group="ring_tip" parent_group="allegro_hand"/>
+    <!--VIRTUAL JOINT: Purpose: this element defines a virtual joint between a robot link and an external frame of reference (considered fixed with respect to the robot)-->
+    <virtual_joint name="virtual_joint" type="fixed" parent_frame="world" child_link="palm_link"/>
+    <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
+    <disable_collisions link1="link_0" link2="link_1" reason="Adjacent"/>
+    <disable_collisions link1="link_0" link2="link_10" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_11" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_11_tip" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_12" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_13" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_14" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_2" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_3" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_3_tip" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_5" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_6" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_7" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_7_tip" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_0" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_0" link2="palm_link" reason="Adjacent"/>
+    <disable_collisions link1="link_1" link2="link_10" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_11" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_11_tip" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_12" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_13" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_14" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_2" reason="Adjacent"/>
+    <disable_collisions link1="link_1" link2="link_3" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_3_tip" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_1" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_1" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_11" reason="Adjacent"/>
+    <disable_collisions link1="link_10" link2="link_11_tip" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_12" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_13" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_14" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_3_tip" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_10" link2="link_9" reason="Adjacent"/>
+    <disable_collisions link1="link_10" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_11" link2="link_11_tip" reason="Adjacent"/>
+    <disable_collisions link1="link_11" link2="link_12" reason="Never"/>
+    <disable_collisions link1="link_11" link2="link_13" reason="Never"/>
+    <disable_collisions link1="link_11" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_11" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_11" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_11" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_11_tip" link2="link_12" reason="Never"/>
+    <disable_collisions link1="link_11_tip" link2="link_13" reason="Never"/>
+    <disable_collisions link1="link_11_tip" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_11_tip" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_11_tip" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_13" reason="Adjacent"/>
+    <disable_collisions link1="link_12" link2="link_14" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_2" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_3" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_5" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_6" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_7" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_12" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_12" link2="palm_link" reason="Adjacent"/>
+    <disable_collisions link1="link_13" link2="link_14" reason="Adjacent"/>
+    <disable_collisions link1="link_13" link2="link_15" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_15_tip" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_2" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_3" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_3_tip" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_5" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_6" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_7" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_7_tip" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_13" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_13" link2="palm_link" reason="Default"/>
+    <disable_collisions link1="link_14" link2="link_15" reason="Adjacent"/>
+    <disable_collisions link1="link_14" link2="link_15_tip" reason="Never"/>
+    <disable_collisions link1="link_14" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_14" link2="link_5" reason="Never"/>
+    <disable_collisions link1="link_14" link2="link_6" reason="Never"/>
+    <disable_collisions link1="link_14" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_14" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_15" link2="link_15_tip" reason="Adjacent"/>
+    <disable_collisions link1="link_15" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_15" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_15_tip" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_2" link2="link_3" reason="Adjacent"/>
+    <disable_collisions link1="link_2" link2="link_3_tip" reason="Never"/>
+    <disable_collisions link1="link_2" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_2" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_2" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_2" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_3" link2="link_3_tip" reason="Adjacent"/>
+    <disable_collisions link1="link_3" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_3" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_3" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_3" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_3_tip" link2="link_4" reason="Never"/>
+    <disable_collisions link1="link_3_tip" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_3_tip" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_4" link2="link_5" reason="Adjacent"/>
+    <disable_collisions link1="link_4" link2="link_6" reason="Never"/>
+    <disable_collisions link1="link_4" link2="link_7" reason="Never"/>
+    <disable_collisions link1="link_4" link2="link_7_tip" reason="Never"/>
+    <disable_collisions link1="link_4" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_4" link2="link_9" reason="Never"/>
+    <disable_collisions link1="link_4" link2="palm_link" reason="Adjacent"/>
+    <disable_collisions link1="link_5" link2="link_6" reason="Adjacent"/>
+    <disable_collisions link1="link_5" link2="link_7" reason="Never"/>
+    <disable_collisions link1="link_5" link2="link_7_tip" reason="Never"/>
+    <disable_collisions link1="link_5" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_5" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_6" link2="link_7" reason="Adjacent"/>
+    <disable_collisions link1="link_6" link2="link_7_tip" reason="Never"/>
+    <disable_collisions link1="link_6" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_6" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_7" link2="link_7_tip" reason="Adjacent"/>
+    <disable_collisions link1="link_7" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_7" link2="palm_link" reason="Never"/>
+    <disable_collisions link1="link_7_tip" link2="link_8" reason="Never"/>
+    <disable_collisions link1="link_8" link2="link_9" reason="Adjacent"/>
+    <disable_collisions link1="link_8" link2="palm_link" reason="Adjacent"/>
+    <disable_collisions link1="link_9" link2="palm_link" reason="Never"/>
+</robot>
