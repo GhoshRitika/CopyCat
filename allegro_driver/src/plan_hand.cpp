@@ -48,8 +48,8 @@ void PlanHand::target_pose_callback(const std_msgs::msg::Float64MultiArray &msg)
   {
     RCLCPP_WARN(LOGGER, "Target joint position(s) were outside of limits, but we will plan and clamp to the limits ");
   }
-  move_group.setMaxVelocityScalingFactor(0.5);
-  move_group.setMaxAccelerationScalingFactor(0.5);
+  move_group.setMaxVelocityScalingFactor(0.75);
+  move_group.setMaxAccelerationScalingFactor(0.75);
   this->move_group.move();
 }
 
