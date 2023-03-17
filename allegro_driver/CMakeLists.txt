@@ -17,26 +17,15 @@ find_package(moveit_common REQUIRED)
 find_package(moveit_ros_planning_interface REQUIRED)
 find_package(moveit_core REQUIRED)
 find_package(moveit_ros_planning REQUIRED)
-# find_package(moveit_ros_planning_interface REQUIRED)
-# include(${INSTALL_PREFIX}/lib/cmake/allegro_lib.cmake)
+
+# Add the path to the directory containg libBhand file
 find_package(allegro_lib REQUIRED)
 find_library(NAMES BHand PATHS home/ritz/WinterQ/Project/AllegroHandManipulation/Allegro_interface/src/libBHand_64/lib/libBHand.so)
-# find_library(NAMES PCANBasic PATHS home/ritz/WinterQ/Project/AllegroHandManipulation/Allegro_interface/src/Pcan-Basic_Linux-4.6.2.36/libpcanbasic/pcanbasic/lib/libpcanbasic.so)
-# find_package(bhand REQUIRED NO_MODULE)
-# uncomment the following section in order to fill in
-# further dependencies manually.
-# find_package(<dependency> REQUIRED)
-# add_library(bhand SHARED IMPORTED)
-# set_property(TARGET bhand PROPERTY
-#              IMPORTED_LOCATION "/home/ritz/WinterQ/Project/AllegroHandManipulation/Allegro_interface/src/bhand/lib/BHand.so")
 add_executable(allegro_driver src/allegro_driver.cpp)
 add_executable(hello_moveit src/hello_moveit.cpp)
 add_executable(plan_hand src/plan_hand.cpp)
-# target_link_libraries(allegro_driver bhand)
-# target_include_directories(allegro_driver PUBLIC
-#   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-#   $<INSTALL_INTERFACE:include>)
-target_link_libraries(allegro_driver BHand) #PCANBasic
+
+target_link_libraries(allegro_driver BHand) 
 ament_target_dependencies(allegro_driver rclcpp std_srvs std_msgs sensor_msgs allegro_lib)
 ament_target_dependencies(hello_moveit rclcpp geometry_msgs moveit_ros_planning_interface tf2)
 ament_target_dependencies(plan_hand rclcpp std_msgs moveit_ros_planning_interface moveit_core moveit_ros_planning)

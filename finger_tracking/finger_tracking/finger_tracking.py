@@ -1,3 +1,4 @@
+
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray
@@ -34,7 +35,7 @@ class FingerTracking(Node):
         self.mid_pose = PoseStamped()
         self.ang_pub = self.create_publisher(Float64MultiArray, 'Joint_angles', 10)
         self.timer = self.create_timer(0.01, self.timer_callback)
-        self.timer2 = self.create_timer(2.5, self.timer_callback2)
+        self.timer2 = self.create_timer(1.5, self.timer_callback2)
 
 
     def get_indices(self, handLandmarks):
