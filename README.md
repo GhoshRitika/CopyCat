@@ -50,9 +50,9 @@ sudo apt-get install python3-opencv
     make
     sudo make install
     ```
-- Download, build, and install Grasping Library for Linux, "libBHand": Grasping_Library_for_Linux. 
-5. Download [this package](https://github.com/GhoshRitika/Allegro_hand) into the src directory: git clone git@github.com:GhoshRitika/Allegro_hand.git
-6. Download my [gesture recognition](https://github.com/GhoshRitika/go1-gesture-command) fork in the same src directory: git clone git@github.com:GhoshRitika/go1-gesture-command.git
+- Download, build, and install Grasping Library for Linux, "libBHand": [Grasping_Library_for_Linux](http://wiki.wonikrobotics.com/AllegroHandWiki/index.php/Grasping_Library_for_Linux)
+5. Download [this package](https://github.com/GhoshRitika/Allegro_hand) into the src directory: `git clone git@github.com:GhoshRitika/Allegro_hand.git`
+6. Download my [gesture recognition](https://github.com/GhoshRitika/go1-gesture-command) fork in the same src directory: `git clone git@github.com:GhoshRitika/go1-gesture-command.git`
 
 ## **Contents**
 Refer to README of individual packages for more detailed instructions and information.
