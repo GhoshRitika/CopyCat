@@ -6,8 +6,6 @@
 
   <node pkg="allegro_driver" exec="plan_hand" name="plan_hand"/>
   <node pkg="finger_tracking" exec="finger_tracking" name="finger_tracking" if="$(eval '\'$(var teleop)\' == \'true\'')" />
-  <!-- <include file="$(find-pkg-share finger_tracking)/launch/fingertracking.launch.xml" if="$(eval '\'$(var teleop)\' == \'true\'')" /> -->
-
   <node pkg="allegro_driver" exec="allegro_driver" name="allegro_driver"/>
 
 </launch>

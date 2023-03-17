@@ -401,7 +401,7 @@ class AllegroDriver : public rclcpp::Node
     : Node("allegro_driver"), count_(0.0)
     {
     jointstates_sub = create_subscription<sensor_msgs::msg::JointState>("/joint_states", 10, std::bind(&AllegroDriver::angle_callback, this, std::placeholders::_1));
-    timer_ = this->create_wall_timer(50ms, std::bind(&AllegroDriver::timer_callback, this));
+    timer_ = this->create_wall_timer(10ms, std::bind(&AllegroDriver::timer_callback, this));
 
     }
 
