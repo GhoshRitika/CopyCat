@@ -1,7 +1,7 @@
 # CopyCat: Movement Mirroring with Allegro Hand
 Author: Ritika Ghosh
 
-![GraspingWithAllegro](https://user-images.githubusercontent.com/60728026/226075105-37d79943-52b6-4db4-8c63-c11b21a8843d.mp4)
+[GraspingWithAllegro](https://user-images.githubusercontent.com/60728026/226075105-37d79943-52b6-4db4-8c63-c11b21a8843d.mp4)
 
 ## **Description**
 The CopyCat package enables the 4 fingered Wonick robotics’ Allegro hand to mirror the finger movement of an actual hand in ROS 2. This package has 2 modes, one where the robot hand is capable of mimicking gross finger movement while the other mode allows for the recognition of 5 types of hand gestures which are useful for carrying out finer grasping tasks. In order to perform these tasks the package utilizes and RGB camera to observe the human hand movements tracked using mediapipe’s machine learning framework to either employ an algorithm to calculate and retarget the joint states directly or use a pre-trained hand gesture recognition package to obtain already defined corresponding grasping hand configuration. These 16 joint state angles are fed to the Moveit! planner to plan and execute valid hand movements.
