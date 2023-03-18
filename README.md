@@ -80,13 +80,25 @@ Begin moving your right hand in front of your webcam!
 ## **Package Structure**
 ### Visual Feedback: 
 **finger_tracking:**
+
+[finger_tracking](https://user-images.githubusercontent.com/60728026/226079246-2d5ffed1-a4bf-48c5-9113-4dd5e13b10ac.mp4)
+
 Uses mediapipe’s hand recognition framework to calculate each of the joint angles of the hand configuration as seen by the RGB camera and publishes it for the motion controller.
 
 **go1-gesture-recognition:**
+
+[poses](https://user-images.githubusercontent.com/60728026/226079470-4d401a7c-2c1e-42e8-bd53-50abc58967b6.mp4)
+
 Uses a fork of the mediapipe gesture recognition repository to correctly recognize a gesture made by the right hand and assign an id number to it. Depending on the id the hgr_com node publishes the joint angles for corresponding grasping configuration in the robot hand.
 ### Motion Controller:
 **allegro_driver:**
+
+[grasps](https://user-images.githubusercontent.com/60728026/226079436-b16fee45-a3fa-4731-a9b8-0982ae534f3a.mp4)
+
 It has 2 nodes, the plan_hand node subscribes to the joint_angles topic and sends it to the move group node to plan a trajectory and then execute it. The allegro_driver node subscribes to the joint_states topic and sends the resulting angles to the robot hand.
 
 **Allegro_moveit_config:**
+
+[VisualizationMoveit](https://user-images.githubusercontent.com/60728026/226078089-c1c0e526-d210-465c-a52f-49cbffca3423.mp4)
+
 Configured the Allegro Hand robot with MoveIt! With the help of MoveIt setup assistant such that its controller can plan and execute valid trajectories for the nearest solution while avoiding self collision and exceeding finger joint limits given goal joint angles. 
