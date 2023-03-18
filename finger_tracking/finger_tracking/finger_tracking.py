@@ -35,7 +35,7 @@ class FingerTracking(Node):
         self.mid_pose = PoseStamped()
         self.ang_pub = self.create_publisher(Float64MultiArray, 'Joint_angles', 10)
         self.timer = self.create_timer(0.01, self.timer_callback)
-        self.timer2 = self.create_timer(1.0, self.timer_callback2)
+        self.timer2 = self.create_timer(2.5, self.timer_callback2)
 
 
     def get_indices(self, handLandmarks):
@@ -90,14 +90,14 @@ class FingerTracking(Node):
             self.index_twist = 70
         elif (self.index_twist<60):
             self.index_twist=60
-        self.index_twist = (self.index_twist-65) * (-27-27)/(60-70)
+        self.index_twist =(self.index_twist-65) * (-17-17)/(60-70)
 
         self.thumb_wrist = self.GetAngleABC(self.index_mcp, self.wrist, self.thumb_ip)
         if(self.thumb_wrist> 165):
             self.thumb_wrist= 165
         elif(self.thumb_wrist< 145):
             self.thumb_wrist=145
-        self.thumb_wrist = 15 + (self.thumb_wrist - 145)* (15-80)/(145-165)
+        self.thumb_wrist = (self.thumb_wrist - 145)* (15-80)/(145-165) #15 +
 
         m16 = math.atan2(self.wrist[1] - self.thumb_ip[1], (self.wrist[0] - self.thumb_ip[0]))
         m17 = math.atan2(self.wrist[1] - self.index_mcp[1], (self.wrist[0] - self.index_mcp[0]))
@@ -136,7 +136,7 @@ class FingerTracking(Node):
             self.middle_twist = 70
         elif (self.middle_twist<60):
             self.middle_twist=60
-        self.middle_twist = (self.middle_twist-65) * (-27-27)/(60-70)
+        self.middle_twist = (self.middle_twist-65) * (-17-17)/(60-70)
 
         self.middle_knuckle = self.GetAngleABC(self.middle_dip, self.middle_pip, self.middle_mcp)
         if(self.middle_knuckle > 140):
@@ -166,7 +166,7 @@ class FingerTracking(Node):
             self.ring_twist = 70
         elif (self.ring_twist<60):
             self.ring_twist=60
-        self.ring_twist = (self.ring_twist-65) * (-27-27)/(60-70)
+        self.ring_twist = (self.ring_twist-65) * (-17-17)/(60-70)
 
         self.ring_knuckle = self.GetAngleABC(self.ring_dip, self.ring_pip, self.ring_mcp)
         if(self.ring_knuckle > 140):
@@ -235,7 +235,6 @@ class FingerTracking(Node):
                     cv2.destroyAllWindows()
 
     def timer_callback2(self):
-        print("PUBLISHING")
         self.ang_pub.publish(self.angles)
 
 def main(args=None):
@@ -244,5 +243,3 @@ def main(args=None):
     rclpy.spin(node)
     node.cap.release()
     rclpy.shutdown()
-    # cv2.destroyAllWindows()
-    # self.cap.release()

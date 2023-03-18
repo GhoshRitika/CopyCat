@@ -1,8 +1,10 @@
 # CopyCat: Movement Mirroring with Allegro Hand
 Author: Ritika Ghosh
 
+![GraspingWithAllegro](https://user-images.githubusercontent.com/60728026/226075105-37d79943-52b6-4db4-8c63-c11b21a8843d.mp4)
+
 ## **Description**
-The CopyCat package enables the 4 fingered Wonick robotics’ Allegro hand to mirror the finger movement of an actual hand. This package has 2 modes, one where the robot hand is capable of mimicking gross finger movement while the other mode allows for the recognition of 5 types of hand gestures which are useful for carrying out finer grasping tasks. In order to perform these tasks the package utilizes and RGB camera to observe the human hand movements tracked using mediapipe’s machine learning framework to either employ an algorithm to calculate and retarget the joint states directly or use a pre-trained hand gesture recognition package to obtain already defined corresponding grasping hand configuration. These 16 joint state angles are fed to the Moveit! planner to plan and execute valid hand movements.
+The CopyCat package enables the 4 fingered Wonick robotics’ Allegro hand to mirror the finger movement of an actual hand in ROS 2. This package has 2 modes, one where the robot hand is capable of mimicking gross finger movement while the other mode allows for the recognition of 5 types of hand gestures which are useful for carrying out finer grasping tasks. In order to perform these tasks the package utilizes and RGB camera to observe the human hand movements tracked using mediapipe’s machine learning framework to either employ an algorithm to calculate and retarget the joint states directly or use a pre-trained hand gesture recognition package to obtain already defined corresponding grasping hand configuration. These 16 joint state angles are fed to the Moveit! planner to plan and execute valid hand movements.
 
 ## **Hardware Requirements**
 1. [Wonik Allegro Robotic Hand Version 4.0](http://wiki.wonikrobotics.com/AllegroHandWiki/index.php/Allegro_Hand_v4.0)
@@ -57,13 +59,13 @@ sudo apt-get install python3-opencv
 ## **Contents**
 Refer to README of individual packages for more detailed instructions and information.
 1. [Allegro_hand](https://github.com/GhoshRitika/Allegro_hand)
-    - [allegro_driver](https://github.com/GhoshRitika/Allegro_hand/tree/main/allegro_driver)
+    - [allegro_driver](https://github.com/GhoshRitika/Allegro_hand/tree/main/allegro_driver) : ROS2 C++
     - [Allegro_moveit_config](https://github.com/GhoshRitika/Allegro_hand/tree/main/Allegro_moveit_config)
-    - [allegro_lib](https://github.com/GhoshRitika/Allegro_hand/tree/main/allegro_lib)
-    - [finger_tracking](https://github.com/GhoshRitika/Allegro_hand/tree/main/finger_tracking)
+    - [allegro_lib](https://github.com/GhoshRitika/Allegro_hand/tree/main/allegro_lib): C++
+    - [finger_tracking](https://github.com/GhoshRitika/Allegro_hand/tree/main/finger_tracking): ROS 2 python
 2. [go1-gesture-command](https://github.com/GhoshRitika/go1-gesture-command)
-    - [go1_cmd](https://github.com/GhoshRitika/go1-gesture-command/tree/main/go1_cmd)
-    - [ros2_hgr](https://github.com/GhoshRitika/go1-gesture-command/tree/main/ros2_hgr)
+    - [go1_cmd](https://github.com/GhoshRitika/go1-gesture-command/tree/main/go1_cmd): ROS 2 python
+    - [ros2_hgr](https://github.com/GhoshRitika/go1-gesture-command/tree/main/ros2_hgr): ROS2 python
 
 ## **User Guide**
 1. Connect PCAN-USB and Allegro Hand (make sure to power off Allegro Hand)

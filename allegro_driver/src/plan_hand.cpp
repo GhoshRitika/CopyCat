@@ -37,7 +37,7 @@ PlanHand::PlanHand(): Node("plan_hand"), move_group(std::shared_ptr<rclcpp::Node
   joint_group_positions = {0.0, 0.0, 0.0, 0.0, 0.5235, 0.3665, 0.8901, 0.4886, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
   this->move_group.setJointValueTarget(joint_group_positions);
   this->move_group.move();
-  rclcpp::sleep_for(10s);
+  rclcpp::sleep_for(5s);
 }
 
 void PlanHand::target_pose_callback(const std_msgs::msg::Float64MultiArray &msg){
@@ -48,8 +48,8 @@ void PlanHand::target_pose_callback(const std_msgs::msg::Float64MultiArray &msg)
   {
     RCLCPP_WARN(LOGGER, "Target joint position(s) were outside of limits, but we will plan and clamp to the limits ");
   }
-  move_group.setMaxVelocityScalingFactor(0.75);
-  move_group.setMaxAccelerationScalingFactor(0.75);
+  move_group.setMaxVelocityScalingFactor(0.85);
+  move_group.setMaxAccelerationScalingFactor(0.85);
   this->move_group.move();
 }
 
