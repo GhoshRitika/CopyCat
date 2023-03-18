@@ -3,9 +3,9 @@
 <package format="3">
   <name>allegro_lib</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>Library to facilitate the running of allegro hand</description>
   <maintainer email="ritikaghosh2023@u.northwestern.edu">ritz</maintainer>
-  <license>TODO: License declaration</license>
+  <license>MIT</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 

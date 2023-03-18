@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
-#include <termios.h>  //_getch
+#include <termios.h> 
 #include <string.h>
 #include <pthread.h>
 #include <BHand/BHand.h>
@@ -76,10 +76,6 @@ static void* ioThreadProc(void* inst)
         /* wait for the event */
         while (0 == get_message(CAN_Ch, &id, &len, data, FALSE))
         {
-//            printf(">CAN(%d): ", CAN_Ch);
-//            for(int nd=0; nd<len; nd++)
-//                printf("%02x ", data[nd]);
-//            printf("\n");
 
             switch (id)
             {
@@ -115,11 +111,6 @@ static void* ioThreadProc(void* inst)
                 data_return |= (0x01 << (findex));
                 recvNum++;
 
-//                printf(">CAN(%d): Encoder[%d] Count : %6d %6d %6d %6d\n"
-//                    , CAN_Ch, findex
-//                    , vars.enc_actual[findex*4 + 0], vars.enc_actual[findex*4 + 1]
-//                    , vars.enc_actual[findex*4 + 2], vars.enc_actual[findex*4 + 3]);
-
                 if (data_return == (0x01 | 0x02 | 0x04 | 0x08))
                 {
                     // convert encoder count to joint angle
@@ -129,12 +120,6 @@ static void* ioThreadProc(void* inst)
                         // q[i] = (double)(vars.enc_actual[i]*enc_dir[i]-32768-enc_offset[i])*(333.3/65536.0)*(3.141592/180.0);
                     }
 
-                    // print joint angles
-//                    for (int i=0; i<4; i++)
-//                    {
-//                        printf(">CAN(%d): Joint[%d] Pos : %5.1f %5.1f %5.1f %5.1f\n"
-//                            , CAN_Ch, i, q[i*4+0]*RAD2DEG, q[i*4+1]*RAD2DEG, q[i*4+2]*RAD2DEG, q[i*4+3]*RAD2DEG);
-//                    }
 
                     // compute joint torque
                     ComputeTorque();

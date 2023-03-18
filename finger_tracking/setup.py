@@ -15,7 +15,7 @@ setup(
     zip_safe=True,
     maintainer='ritz',
     maintainer_email='ritikaghosh2023@u.northwestern.edu',
-    description='TODO: Package description',
+    description='tracks human hand',
     license='MIT',
     tests_require=['pytest'],
     entry_points={
