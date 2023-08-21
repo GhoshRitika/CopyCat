@@ -1,4 +1,9 @@
+"""
+Calculates and publishes the joint angles for each fingers joint.
 
+PUBLISHERS:
+    + /Joint_angles (std_msgs/msg/Float64MultiArray) - Publishes the joint angles.
+"""
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Float64MultiArray
@@ -20,7 +25,16 @@ JOINT_LIMIT_RING_LOW =  0.0
 
 
 class FingerTracking(Node):
+    """
+    Run the webcam and publish the joint angles.
+
+    This node streams frames from the webcam and using mediapipe, tracks the position of the
+    joints of each of the fingers in order to calculate their joint angles.
+    """
     def __init__(self):
+        """
+        Initialize publishers, timer callbacks and detected hand.
+        """
         super().__init__('finger_tracking')
         self.mp_drawing = mp.solutions.drawing_utils
         self.mp_drawing_styles = mp.solutions.drawing_styles
@@ -39,6 +53,17 @@ class FingerTracking(Node):
 
 
     def get_indices(self, handLandmarks):
+        """
+        Track the positions of fingers.
+
+        Args:
+        -------
+            handLandmarks: Mediapipe objects containing the x, y and z positons of each finger joint.
+
+        Returns
+        -------
+            None
+        """
         self.wrist = [0.0, 0.0, 0.0]
 
         self.thumb_cmc = [handLandmarks.landmark[1].x - handLandmarks.landmark[0].x, handLandmarks.landmark[1].y - handLandmarks.landmark[0].y, handLandmarks.landmark[1].z - handLandmarks.landmark[0].z]
@@ -62,6 +87,9 @@ class FingerTracking(Node):
         self.ring_tip = [handLandmarks.landmark[16].x - handLandmarks.landmark[0].x, handLandmarks.landmark[16].y - handLandmarks.landmark[0].y, handLandmarks.landmark[16].z - handLandmarks.landmark[0].z]
 
     def calc_angle(self):
+        """
+        Calculate the joint angles given the position of the joints wrt wrist as the base.
+        """
         self.index_knuckle = self.GetAngleABC(self.index_dip, self.index_pip, self.index_mcp)
         if(self.index_knuckle > 120):
             self.index_knuckle = 120
@@ -189,6 +217,20 @@ class FingerTracking(Node):
 
 
     def GetAngleABC(self, a, b, c):
+        """
+        Creates 2 vectors using positions of 3 joints to calculate the angle between them.
+
+        Args:
+        -------
+            a: Position of a joint
+            b: Position of a joint
+            c: Position of a joint
+
+        Returns
+        -------
+            Angle of the b joint.
+
+        """
         ab = [b[0] - a[0], b[1] - a[1], b[2] - a[2]]
         bc = [c[0] - b[0], c[1] - b[1], c[2] - b[2]]
 
@@ -206,38 +248,45 @@ class FingerTracking(Node):
         return np.arccos(res)*180.0/ 3.141592653589793
 
     def timer_callback(self):
-            if self.cap.isOpened():
-                success, image = self.cap.read()
-                if not success:
-                    print("Ignoring empty camera frame.")
-                image.flags.writeable = False
-                image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-                results = self.hands.process(image)
+        """
+        Used the webcam feed to detect and track the finger as well as joint positions.
+        """
+        if self.cap.isOpened():
+            success, image = self.cap.read()
+            if not success:
+                print("Ignoring empty camera frame.")
+            image.flags.writeable = False
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            results = self.hands.process(image)
 
-                image.flags.writeable = True
-                image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-                # if results.multi_hand_world_landmarks:
-                if results.multi_hand_landmarks:
-                    for hand_landmarks in results.multi_hand_landmarks:
-                        
-                        self.get_indices(hand_landmarks)
-                        self.calc_angle()
-                        # print(self.ring_top)
-                        self.mp_drawing.draw_landmarks(
-                            image,
-                            hand_landmarks,
-                            self.mp_hands.HAND_CONNECTIONS,
-                            self.mp_drawing_styles.get_default_hand_landmarks_style(),
-                            self.mp_drawing_styles.get_default_hand_connections_style())
-                # Flip the image horizontally for a selfie-view display.
-                cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
-                if cv2.waitKey(5) & 0xFF == 27:
-                    cv2.destroyAllWindows()
+            image.flags.writeable = True
+            image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+            # if results.multi_hand_world_landmarks:
+            if results.multi_hand_landmarks:
+                for hand_landmarks in results.multi_hand_landmarks:
+                    
+                    self.get_indices(hand_landmarks)
+                    self.calc_angle()
+                    # print(self.ring_top)
+                    self.mp_drawing.draw_landmarks(
+                        image,
+                        hand_landmarks,
+                        self.mp_hands.HAND_CONNECTIONS,
+                        self.mp_drawing_styles.get_default_hand_landmarks_style(),
+                        self.mp_drawing_styles.get_default_hand_connections_style())
+            # Flip the image horizontally for a selfie-view display.
+            cv2.imshow('MediaPipe Hands', cv2.flip(image, 1))
+            if cv2.waitKey(5) & 0xFF == 27:
+                cv2.destroyAllWindows()
 
     def timer_callback2(self):
+        """
+        Publishes the joint anles at different rate than the joint tracking.
+        """
         self.ang_pub.publish(self.angles)
 
 def main(args=None):
+    """Run FingerTracking node."""
     rclpy.init(args=args)
     node = FingerTracking()
     rclpy.spin(node)
