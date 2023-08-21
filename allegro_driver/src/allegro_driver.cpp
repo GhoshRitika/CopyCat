@@ -411,7 +411,7 @@ class AllegroDriver : public rclcpp::Node
     }
 
 
-        void angle_callback(const sensor_msgs::msg::JointState &msg){
+    void angle_callback(const sensor_msgs::msg::JointState &msg){
         qnew[0]=msg.position[12]; //index twist
         qnew[1]=msg.position[0];  //index base
         qnew[2]=msg.position[1];
