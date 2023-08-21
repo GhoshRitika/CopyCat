@@ -1,3 +1,9 @@
+/// \file PlanHand
+/// \brief This node plans and executes the robot hand movements
+///
+/// SUBSCRIBERS:
+///     target_pose_sub_ (std_msgs::msg::Float64MultiArray): Receives the joint angles for each finger
+
 #include <chrono>
 #include <functional>
 #include <memory>
@@ -15,6 +21,7 @@ using namespace std::chrono_literals;
 static const std::string PLANNING_GROUP = "allegro_hand";
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("move_group");
 
+/// \brief node controls the position of a robot fingers and joints
 class PlanHand : public rclcpp::Node
 {
   public:
@@ -29,6 +36,7 @@ class PlanHand : public rclcpp::Node
 
 };
 
+/// \brief declares the node subscribers and sets the hand to an initial pose
 PlanHand::PlanHand(): Node("plan_hand"), move_group(std::shared_ptr<rclcpp::Node>(std::move(this)), PLANNING_GROUP)
 {
   RCLCPP_INFO(LOGGER, "INITIALIZING!");
@@ -40,6 +48,7 @@ PlanHand::PlanHand(): Node("plan_hand"), move_group(std::shared_ptr<rclcpp::Node
   rclcpp::sleep_for(5s);
 }
 
+/// \brief Subscribes to the topic with 16 joint angles for the 4 fingers
 void PlanHand::target_pose_callback(const std_msgs::msg::Float64MultiArray &msg){
   joint_group_positions = msg.data;
   RCLCPP_INFO(LOGGER, "Received Joint angles");
@@ -53,6 +62,7 @@ void PlanHand::target_pose_callback(const std_msgs::msg::Float64MultiArray &msg)
   this->move_group.move();
 }
 
+/// \brief creates a PlanHand node
 int main(int argc, char** argv)
 {
 
